@@ -6,6 +6,7 @@ import { Layout, Image, Button, Alert } from 'antd';
 import { OnJobContext } from '../../Contexts/OnJobContext';
 import { PostApiData } from '../../hook/PostApiData';
 import { DeleteApiData } from '../../hook/DeleteApiData';
+import { useHistory } from 'react-router-dom';
 
 export const Detail = () => {
 	const { Header, Footer, Content } = Layout;
@@ -24,8 +25,12 @@ export const Detail = () => {
 	const AddJobToFavoriteList = () => {
 		PostApiData(detail, 'https://localhost:44318/api/Favorites');
 	};
-	const DeleteJobFromFavoriteList = () => {
-		DeleteApiData(`https://localhost:44318/api/Favorites/${detail.id}`);
+
+	const history = useHistory();
+
+	const DeleteJobFromFavoriteList = async () => {
+		await DeleteApiData(`https://localhost:44318/api/Favorites/${detail.id}`);
+		history.push('/favorite');
 	};
 
 	const ALertTimeout = () => {
@@ -101,20 +106,18 @@ export const Detail = () => {
 				>
 					Add to favorites
 				</Button>
-				<Link to='/favorite' style={{ display: `${onJob === true ? 'none' : 'block'}` }}>
-					<Button
-						style={{
-							color: 'white',
-							backgroundColor: '#2F4F4F',
-							marginRight: '140px',
-							float: 'right',
-							display: `${onJob === true ? 'none' : 'block'}`,
-						}}
-						onClick={() => DeleteJobFromFavoriteList()}
-					>
-						Delete from favorites
-					</Button>
-				</Link>
+				<Button
+					style={{
+						color: 'white',
+						backgroundColor: '#2F4F4F',
+						marginRight: '140px',
+						float: 'right',
+						display: `${onJob === true ? 'none' : 'block'}`,
+					}}
+					onClick={() => DeleteJobFromFavoriteList()}
+				>
+					Delete from favorites
+				</Button>
 			</Footer>
 		</Layout>
 	);
