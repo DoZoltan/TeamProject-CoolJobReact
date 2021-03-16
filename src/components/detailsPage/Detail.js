@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { JobDetailContext } from '../../Contexts/JobDetailContext';
 import 'antd/dist/antd.css';
@@ -7,12 +7,18 @@ import { OnJobContext } from '../../Contexts/OnJobContext';
 import { PostApiData } from '../../hook/PostApiData';
 import { DeleteApiData } from '../../hook/DeleteApiData';
 import { useHistory } from 'react-router-dom';
+import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
 
 export const Detail = () => {
 	const { Header, Footer, Content } = Layout;
 	const { detail } = useContext(JobDetailContext);
 	const { onJob } = useContext(OnJobContext);
 	const [successDisplay, setSuccessDisplay] = useState(false);
+	let [existInFavorite, setExistInFavorite] = useState(false);
+
+	useEffect(() => {
+		jobExistInFavorite();
+	}, []);
 
 	const StyleImage = {
 		display: 'block',
@@ -30,7 +36,7 @@ export const Detail = () => {
 
 	const DeleteJobFromFavoriteList = async () => {
 		await DeleteApiData(`https://localhost:44318/api/Favorites/${detail.id}`);
-		history.push('/favorite');
+		if (onJob === false) history.push('/favorite');
 	};
 
 	const ALertTimeout = () => {
@@ -47,6 +53,18 @@ export const Detail = () => {
 		bottom: '2%',
 		width: '300px',
 		textAlign: 'center',
+	};
+
+	const jobExistInFavorite = async () => {
+		let fetchData = await GetDataFromFavorites(
+			`https://localhost:44318/api/Favorites/${detail.id}`
+		);
+		var count = Object.keys(fetchData.data).length;
+		if (count > 0) {
+			setExistInFavorite(true);
+		} else {
+			setExistInFavorite(false);
+		}
 	};
 
 	return (
@@ -96,12 +114,16 @@ export const Detail = () => {
 						backgroundColor: '#2F4F4F',
 						marginRight: '140px',
 						float: 'right',
-						display: `${onJob === true && successDisplay === false ? 'block' : 'none'}`,
+						display: `${
+							// onJob === true && successDisplay === false ? 'block' : 'none'
+							existInFavorite === false && successDisplay === false ? 'block' : 'none'
+						}`,
 					}}
 					onClick={() => {
 						ALertTimeout();
 						setSuccessDisplay(true);
 						AddJobToFavoriteList();
+						setExistInFavorite(true);
 					}}
 				>
 					Add to favorites
@@ -112,9 +134,13 @@ export const Detail = () => {
 						backgroundColor: '#2F4F4F',
 						marginRight: '140px',
 						float: 'right',
-						display: `${onJob === true ? 'none' : 'block'}`,
+						// display: `${onJob === true ? 'none' : 'block'}`,
+						display: `${existInFavorite === true ? 'block' : 'none'}`,
 					}}
-					onClick={() => DeleteJobFromFavoriteList()}
+					onClick={() => {
+						DeleteJobFromFavoriteList();
+						setExistInFavorite(false);
+					}}
 				>
 					Delete from favorites
 				</Button>
