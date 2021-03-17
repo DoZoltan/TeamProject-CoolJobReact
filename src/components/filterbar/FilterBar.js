@@ -5,28 +5,25 @@ import styled from 'styled-components';
 import { FilteredJobContext } from '../../Contexts/FilteredJobsContext';
 import { JobContext } from '../../Contexts/JobContext';
 import { GetApiData } from '../../hook/GetApiData';
+import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
 
 export const FilterBar = React.memo(() => {
-	const { jobs } = useContext(JobContext);
+	const { jobs } = useContext(JobContext); //get all job
 	const { setFilteredJobs } = useContext(FilteredJobContext);
 
 	useEffect(() => {
-		setFilteredJobs(jobs);
-	}, [setFilteredJobs, jobs]);
+		setFilteredJobs(jobs); //set all job to filtered jobs at render, and never again
+	}, []);
 
-	const [fetchCompany] = GetApiData('https://localhost:44318/api/Filter/Company');
-	const uniqueCompanies = fetchCompany;
-	const [fetchType] = GetApiData('https://localhost:44318/api/Filter/Type');
-	const uniqueTypes = fetchType;
-	const [fetchTitle] = GetApiData('https://localhost:44318/api/Filter/Title');
-	const uniquePositions = fetchTitle;
-	const [fetchLocation] = GetApiData('https://localhost:44318/api/Filter/Location');
-	const uniqueLocations = fetchLocation;
+	let optionsPositions = [];
+	let optionsType = [];
+	let optionsCompany = [];
+	let optionsLocation = [];
 
-	const optionsPositions = [];
-	const optionsType = [];
-	const optionsCompany = [];
-	const optionsLocation = [];
+	let [uniqueCompanies] = GetApiData('https://localhost:44318/api/Filter/Company');
+	let [uniqueTypes] = GetApiData('https://localhost:44318/api/Filter/Type');
+	let [uniquePositions] = GetApiData('https://localhost:44318/api/Filter/Title');
+	let [uniqueLocations] = GetApiData('https://localhost:44318/api/Filter/Location');
 
 	uniquePositions.map((position) =>
 		optionsPositions.push({
@@ -60,24 +57,32 @@ export const FilterBar = React.memo(() => {
 		padding: 10px;
 	`;
 
-	const changeCardListByType = (e) => {
-		const filteredJobs = jobs.filter((job) => job.type.includes(e));
-		setFilteredJobs(filteredJobs);
+	const changeCardListByType = async (e) => {
+		const theTrueFilteredJobs = await GetDataFromFavorites(
+			`https://localhost:44318/api/Filter/Type/${e}/1`
+		); // 1 --> page number (have to be dynamic)
+		setFilteredJobs(theTrueFilteredJobs.data);
 	};
 
-	const changeCardListByLocation = (e) => {
-		const filteredJobs = jobs.filter((job) => job.location.includes(e));
-		setFilteredJobs(filteredJobs);
+	const changeCardListByLocation = async (e) => {
+		const theTrueFilteredJobs = await GetDataFromFavorites(
+			`https://localhost:44318/api/Filter/Location/${e}/1`
+		); // 1 --> page number (have to be dynamic)
+		setFilteredJobs(theTrueFilteredJobs.data);
 	};
 
-	const changeCardListByCompany = (e) => {
-		const filteredJobs = jobs.filter((job) => job.company.includes(e));
-		setFilteredJobs(filteredJobs);
+	const changeCardListByCompany = async (e) => {
+		const theTrueFilteredJobs = await GetDataFromFavorites(
+			`https://localhost:44318/api/Filter/Company/${e}/1`
+		); // 1 --> page number (have to be dynamic)
+		setFilteredJobs(theTrueFilteredJobs.data);
 	};
 
-	const changeCardListByPositions = (e) => {
-		const filteredJobs = jobs.filter((job) => job.title.includes(e));
-		setFilteredJobs(filteredJobs);
+	const changeCardListByPositions = async (e) => {
+		const theTrueFilteredJobs = await GetDataFromFavorites(
+			`https://localhost:44318/api/Filter/Title/${e}/1`
+		); // 1 --> page number (have to be dynamic)
+		setFilteredJobs(theTrueFilteredJobs.data);
 	};
 
 	function resetFilters() {
