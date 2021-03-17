@@ -14,6 +14,7 @@ export const Detail = () => {
 	const { detail } = useContext(JobDetailContext);
 	const { onJob } = useContext(OnJobContext);
 	const [successDisplay, setSuccessDisplay] = useState(false);
+	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	let [existInFavorite, setExistInFavorite] = useState(false);
 
 	useEffect(() => {
@@ -35,19 +36,35 @@ export const Detail = () => {
 	const history = useHistory();
 
 	const DeleteJobFromFavoriteList = async () => {
-		await DeleteApiData(`https://localhost:44318/api/Favorites/${detail.id}`);
+		await DeleteApiData(`https://localhost:44318/api/Favorites/${detail.id}/0`);
 		if (onJob === false) history.push('/favorite');
 	};
 
-	const ALertTimeout = () => {
+	const aLertTimeoutForAddSuccess = () => {
 		setTimeout(() => {
 			setSuccessDisplay(false);
+		}, 2000);
+	};
+
+	const aLertTimeoutForDeleteSuccess = () => {
+		setTimeout(() => {
+			setSuccessDeleteDisplay(false);
 		}, 2000);
 	};
 
 	const SuccessAlertStyle = {
 		position: 'fixed',
 		display: `${successDisplay === true ? 'block' : 'none'}`,
+		zIndex: '2',
+		right: '8%',
+		bottom: '2%',
+		width: '300px',
+		textAlign: 'center',
+	};
+
+	const SuccessDeleteAlertStyle = {
+		position: 'fixed',
+		display: `${successDeleteDisplay === true ? 'block' : 'none'}`,
 		zIndex: '2',
 		right: '8%',
 		bottom: '2%',
@@ -105,6 +122,12 @@ export const Detail = () => {
 					type='success'
 					showIcon
 				/>
+				<Alert
+					style={SuccessDeleteAlertStyle}
+					message='Deleted from favorite jobs'
+					type='error'
+					showIcon
+				/>
 			</Content>
 			<Footer>
 				Added at : {detail.created_at} {onJob === true}
@@ -120,7 +143,7 @@ export const Detail = () => {
 						}`,
 					}}
 					onClick={() => {
-						ALertTimeout();
+						aLertTimeoutForAddSuccess();
 						setSuccessDisplay(true);
 						AddJobToFavoriteList();
 						setExistInFavorite(true);
@@ -138,6 +161,8 @@ export const Detail = () => {
 						display: `${existInFavorite === true ? 'block' : 'none'}`,
 					}}
 					onClick={() => {
+						aLertTimeoutForDeleteSuccess();
+						setSuccessDeleteDisplay(true);
 						DeleteJobFromFavoriteList();
 						setExistInFavorite(false);
 					}}
