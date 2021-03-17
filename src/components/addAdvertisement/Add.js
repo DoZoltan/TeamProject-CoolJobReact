@@ -1,76 +1,127 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'antd/dist/antd.css';
-import { Layout, Button } from 'antd';
+import { Layout, Button, Alert } from 'antd';
 import styled from 'styled-components';
 import { PostApiData } from '../../hook/PostApiData';
 
-const Div = styled.div`
-	margin-bottom: 20px;
-`;
-
-const Label = styled.label`
-	font-size: 16px;
-	font-weight: bold;
-`;
-
-const Input = styled.input`
-	width: 100%;
-	font-size: 14px;
-`;
-
-const Textarea = styled.textarea`
-	width: 100%;
-	font-size: 14px;
-	height: 100px;
-`;
-
-let result = {
-	company: '',
-	company_url: '',
-	company_logo: '',
-	location: '',
-	type: '',
-	title: '',
-	description: '',
-	how_to_apply: '',
-	id: '',
-	url: '',
-	created_at: '',
-};
-
-function handleChange(event) {
-	result[event.target.id] = event.target.value;
-}
-
-function handleSubmit() {
-	const newId = makeId(25);
-	const url = `https://jobs.github.com/positions/${newId}`;
-
-	var today = new Date();
-	var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-	var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-	var fullTime = `${date} ${time}`;
-
-	result['id'] = newId;
-	result['url'] = url;
-	result['created_at'] = fullTime;
-
-	PostApiData(result, 'https://localhost:44318/api/Jobs');
-	window.location.reload(false);
-}
-
-function makeId(length) {
-	var result = '';
-	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	var charactersLength = characters.length;
-	for (var i = 0; i < length; i++) {
-		result += characters.charAt(Math.floor(Math.random() * charactersLength));
-	}
-	return result;
-}
-
 export const Add = () => {
+	var canSend = true;
+	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	const { Footer, Content } = Layout;
+
+	function makeId(length) {
+		var result = '';
+		var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		var charactersLength = characters.length;
+		for (var i = 0; i < length; i++) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+		return result;
+	}
+
+	const SuccessDeleteAlertStyle = {
+		position: 'fixed',
+		display: `${successDeleteDisplay === true ? 'block' : 'none'}`,
+		zIndex: '2',
+
+		bottom: '2%',
+		width: '300px',
+		textAlign: 'center',
+	};
+
+	const Div = styled.div`
+		margin-bottom: 20px;
+	`;
+
+	const Label = styled.label`
+		font-size: 16px;
+		font-weight: bold;
+	`;
+
+	const Input = styled.input`
+		width: 100%;
+		font-size: 14px;
+	`;
+
+	const Textarea = styled.textarea`
+		width: 100%;
+		font-size: 14px;
+		height: 100px;
+	`;
+
+	let result = {
+		company: '',
+		company_url: '',
+		company_logo: '',
+		location: '',
+		type: '',
+		title: '',
+		description: '',
+		how_to_apply: '',
+		id: '',
+		url: '',
+		created_at: '',
+	};
+
+	function handleChange(event) {
+		result[event.target.id] = event.target.value;
+		document.getElementById(event.target.id).style.border = '1px solid black';
+	}
+
+	const aLertTimeoutForDeleteSuccess = () => {
+		setTimeout(() => {
+			setSuccessDeleteDisplay(false);
+		}, 2000);
+	};
+
+	function handleSubmit() {
+		const newId = makeId(25);
+		const url = `https://jobs.github.com/positions/${newId}`;
+
+		var today = new Date();
+		var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+		var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+		var fullTime = `${date} ${time}`;
+
+		result['id'] = newId;
+		result['url'] = url;
+		result['created_at'] = fullTime;
+
+		for (const [key, value] of Object.entries(result)) {
+			if (value.length < 1) {
+				document.getElementById(key).style.border = '1px solid red';
+				canSend = false;
+			}
+
+			if (
+				(key === 'company_url' && !isValidHttpUrl(value)) ||
+				(key === 'company_logo' && !isValidHttpUrl(value))
+			) {
+				document.getElementById(key).style.border = '1px solid red';
+				canSend = false;
+			}
+		}
+		if (canSend === true) {
+			PostApiData(result, 'https://localhost:44318/api/Jobs');
+			window.location.reload(false);
+		} else {
+			//aLertTimeoutForDeleteSuccess();
+			//setSuccessDeleteDisplay(true);
+			canSend = true;
+		}
+	}
+
+	function isValidHttpUrl(string) {
+		let url;
+
+		try {
+			url = new URL(string);
+		} catch (_) {
+			return false;
+		}
+
+		return url.protocol === 'http:' || url.protocol === 'https:';
+	}
 
 	return (
 		<Layout>
@@ -135,6 +186,12 @@ export const Add = () => {
 				</form>
 			</Content>
 			<Footer style={{ alignSelf: 'center' }}>
+				<Alert
+					style={SuccessDeleteAlertStyle}
+					message='Fill all fields!!'
+					type='error'
+					showIcon
+				/>
 				<Button style={{ fontSize: 18 }} onClick={handleSubmit}>
 					Send advertisement
 				</Button>
