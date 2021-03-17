@@ -22,7 +22,7 @@ export const Main = () => {
 	return (
 		<div>
 			<LogoDiv>
-				<P>Welcome to the Cool Job website! </P>
+				<P id={'welcomeText'}>Welcome to the Cool Job website! </P>
 			</LogoDiv>
 		</div>
 	);

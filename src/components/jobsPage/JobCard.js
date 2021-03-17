@@ -6,18 +6,17 @@ import { Card, Col } from 'antd';
 import { JobDetailContext } from '../../Contexts/JobDetailContext';
 import { GetApiData } from '../../hook/GetApiData';
 
+const StyledImage = styled.img`
+	margin-top: 1px;
+	width: 12em;
+	height: 10em;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+`;
 export const JobCard = (props) => {
 	const { setDetail } = useContext(JobDetailContext);
 	const { Meta } = Card;
-
-	const StyledImage = styled.img`
-		margin-top: 1px;
-		width: 12em;
-		height: 10em;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-	`;
 
 	const [fetchData] = GetApiData(`https://localhost:44318/api/Jobs/${props.id}`);
 
@@ -26,6 +25,7 @@ export const JobCard = (props) => {
 			<Link onClick={() => setDetail(fetchData)} to={'/detail/' + props.id}>
 				<Card
 					id={props.id}
+					key={props.id}
 					headStyle={{ textAlign: 'center' }}
 					hoverable
 					style={{ width: 280, height: 300 }}

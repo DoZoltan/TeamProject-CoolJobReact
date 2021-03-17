@@ -4,26 +4,26 @@ import JobsList from './JobsList';
 import styled from 'styled-components';
 import { BackTop } from 'antd';
 
+const StyledDiv = styled.div`
+	width: 85%;
+	float: right;
+`;
+
+const JobsDiv = styled.div`
+	padding: 15px;
+	background: #ececec;
+`;
+
+const Div = styled.div`
+	position: fixed;
+	float: left;
+`;
+const MemoizedSubComponent = React.memo(FilterBar);
 export const JobsBox = () => {
-	const StyledDiv = styled.div`
-		width: 85%;
-		float: right;
-	`;
-
-	const JobsDiv = styled.div`
-		padding: 15px;
-		background: #ececec;
-	`;
-
-	const Div = styled.div`
-		position: fixed;
-		float: left;
-	`;
-
 	return (
 		<React.Fragment>
 			<Div>
-				<FilterBar />
+				<MemoizedSubComponent />
 			</Div>
 			<StyledDiv>
 				<JobsDiv>

@@ -7,6 +7,14 @@ import { JobContext } from '../../Contexts/JobContext';
 import { GetApiData } from '../../hook/GetApiData';
 import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
 
+const StyledMenu = styled(Menu)`
+	width: 200px;
+`;
+
+const Div = styled.div`
+	padding: 10px;
+`;
+
 export const FilterBar = React.memo(() => {
 	const { jobs } = useContext(JobContext); //get all job
 	const { setFilteredJobs } = useContext(FilteredJobContext);
@@ -49,13 +57,6 @@ export const FilterBar = React.memo(() => {
 		})
 	);
 
-	const StyledMenu = styled(Menu)`
-		width: 200px;
-	`;
-
-	const Div = styled.div`
-		padding: 10px;
-	`;
 
 	const changeCardListByType = async (e) => {
 		const theTrueFilteredJobs = await GetDataFromFavorites(
@@ -88,11 +89,11 @@ export const FilterBar = React.memo(() => {
 	function resetFilters() {
 		setFilteredJobs(jobs);
 	}
-
 	return (
 		<StyledMenu>
 			<Div>
 				<AutoComplete
+					id={'typeFilter'}
 					dropdownClassName='certain-category-search-dropdown'
 					dropdownMatchSelectWidth={300}
 					style={{
@@ -109,6 +110,7 @@ export const FilterBar = React.memo(() => {
 			</Div>
 			<Div>
 				<AutoComplete
+					id={'locationFilter'}
 					dropdownClassName='certain-category-search-dropdown'
 					dropdownMatchSelectWidth={300}
 					style={{
@@ -125,6 +127,7 @@ export const FilterBar = React.memo(() => {
 			</Div>
 			<Div>
 				<AutoComplete
+					id={'companyFilter'}
 					dropdownClassName='certain-category-search-dropdown'
 					dropdownMatchSelectWidth={300}
 					style={{
@@ -141,6 +144,7 @@ export const FilterBar = React.memo(() => {
 			</Div>
 			<Div>
 				<AutoComplete
+					id={'positionFilter'}
 					dropdownClassName='certain-category-search-dropdown'
 					dropdownMatchSelectWidth={800}
 					style={{
@@ -157,6 +161,7 @@ export const FilterBar = React.memo(() => {
 			</Div>
 			<div>
 				<button
+					id={'resetFilterButton'}
 					style={{
 						width: 100,
 						height: 25,

@@ -9,25 +9,35 @@ import { DeleteApiData } from '../../hook/DeleteApiData';
 import { useHistory } from 'react-router-dom';
 import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
 
+const StyleImage = {
+	display: 'block',
+	marginLeft: 'auto',
+	marginRight: 'auto',
+	marginTop: '8px',
+	width: '500px',
+};
 export const Detail = () => {
 	const { Header, Footer, Content } = Layout;
 	const { detail } = useContext(JobDetailContext);
 	const { onJob } = useContext(OnJobContext);
 	const [successDisplay, setSuccessDisplay] = useState(false);
 	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
-	let [existInFavorite, setExistInFavorite] = useState(false);
+	const [existInFavorite, setExistInFavorite] = useState(false);
 
 	useEffect(() => {
+		const jobExistInFavorite = async () => {
+			let fetchData = await GetDataFromFavorites(
+				`https://localhost:44318/api/Favorites/${detail.id}/0`
+			); // 0 --> the id of the user
+			var count = Object.keys(fetchData.data).length;
+			if (count > 0) {
+				setExistInFavorite(true);
+			} else {
+				setExistInFavorite(false);
+			}
+		};
 		jobExistInFavorite();
-	}, []);
-
-	const StyleImage = {
-		display: 'block',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		marginTop: '8px',
-		width: '500px',
-	};
+	}, [detail.id]);
 
 	const AddJobToFavoriteList = () => {
 		PostApiData(detail, 'https://localhost:44318/api/Favorites');
@@ -73,24 +83,12 @@ export const Detail = () => {
 		textAlign: 'center',
 	};
 
-	const jobExistInFavorite = async () => {
-		let fetchData = await GetDataFromFavorites(
-			`https://localhost:44318/api/Favorites/${detail.id}/0`
-		);
-		// 0 --> the id of the user
-		var count = Object.keys(fetchData.data).length;
-		if (count > 0) {
-			setExistInFavorite(true);
-		} else {
-			setExistInFavorite(false);
-		}
-	};
-
 	return (
 		<Layout>
-			<Header style={{ color: '#F5FFFA', backgroundColor: '#000080' }}>
+			<Header id={'header'} style={{ color: '#F5FFFA', backgroundColor: '#000080' }}>
 				<Link to={onJob === true ? '/jobs' : '/favorite'}>
 					<Button
+						id={'backToButton'}
 						style={{
 							color: 'white',
 							backgroundColor: '#2F4F4F',
@@ -101,39 +99,47 @@ export const Detail = () => {
 						{onJob === true ? 'Back to Jobs' : 'Back to favorites'}
 					</Button>
 				</Link>
-				<h1 style={{ color: '#F5FFFA' }}>{detail.title}</h1>
+				<h1 id={'headerTitle'} style={{ color: '#F5FFFA' }}>
+					{detail.title}
+				</h1>
 			</Header>
-			<Content>
+			<Content id={'content'}>
 				<div style={{ paddingRight: '400px', paddingLeft: '400px' }}>
-					<Image style={StyleImage} src={detail.company_logo} />
+					<Image id={'imgLogo'} style={StyleImage} src={detail.company_logo} />
 				</div>
-				<div style={{ margin: '20px' }}>
-					<h2>Company name: {detail.company}</h2>
-					<h3>Job title: {detail.type}</h3>
-					<h3>Job location: {detail.location}</h3>
-					<h4>
+				<div id={'textBox'} style={{ margin: '20px' }}>
+					<h2 id={'companyName'}>Company name: {detail.company}</h2>
+					<h3 id={'jobType'}>Job title: {detail.type}</h3>
+					<h3 id={'jobLocation'}>Job location: {detail.location}</h3>
+					<h4 id={'companyPage'}>
 						company page: <a href={detail.company_url}>{detail.company_url}</a>
 					</h4>
-					<p dangerouslySetInnerHTML={{ __html: detail.apply }} />
-					<h4>descritpiton:</h4>
+					<p
+						id={'descriptionParagraph'}
+						dangerouslySetInnerHTML={{ __html: detail.apply }}
+					/>
+					<h4 id={'jobDescription'}>descritpiton:</h4>
 					<p dangerouslySetInnerHTML={{ __html: detail.description }} />
 				</div>
 				<Alert
+					id={'successAlert'}
 					style={SuccessAlertStyle}
 					message='Added to favorite jobs'
 					type='success'
 					showIcon
 				/>
 				<Alert
+					id={'deleteAlert'}
 					style={SuccessDeleteAlertStyle}
 					message='Deleted from favorite jobs'
 					type='error'
 					showIcon
 				/>
 			</Content>
-			<Footer>
+			<Footer id={'detailFooter'}>
 				Added at : {detail.created_at} {onJob === true}
 				<Button
+					id={'addToFavoriteButton'}
 					style={{
 						color: 'white',
 						backgroundColor: '#2F4F4F',
@@ -154,6 +160,7 @@ export const Detail = () => {
 					Add to favorites
 				</Button>
 				<Button
+					id={'deleteFromFavoriteButton'}
 					style={{
 						color: 'white',
 						backgroundColor: '#2F4F4F',

@@ -22,22 +22,27 @@ export const NavBar = () => {
 			<StickyHeader>
 				<Menu theme='dark' mode='horizontal'>
 					<Menu.Item key='1'>
-						<Link to='/main'>Main</Link>
+						<Link id={'linkToMain'} to='/main'>
+							Main
+						</Link>
 					</Menu.Item>
 					<Menu.Item key='2'>
-						<Link to='/jobs' onClick={() => setOnJob(true)}>
+						<Link id={'linkToJobs'} to='/jobs' onClick={() => setOnJob(true)}>
 							Jobs
 						</Link>
 					</Menu.Item>
 					<Menu.Item key='3'>
-						<Link to='/favorite' onClick={() => setOnJob(false)}>
+						<Link id={'linkToFavorites'} to='/favorite' onClick={() => setOnJob(false)}>
 							Favorites
 						</Link>
 					</Menu.Item>
 					<Menu.Item key='4'>
-						<Link to='/add'>Add advertisement</Link>
+						<Link id={'linkToAdd'} to='/add'>
+							Add advertisement
+						</Link>
 					</Menu.Item>
 					<Button
+						id={'reloadButton'}
 						style={{
 							color: 'white',
 							backgroundColor: '#2F4F4F',

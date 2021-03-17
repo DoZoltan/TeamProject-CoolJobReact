@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
-import { Layout, Button, Alert } from 'antd';
+import { Layout, Button } from 'antd';
 import styled from 'styled-components';
 import { PostApiData } from '../../hook/PostApiData';
 
+const Div = styled.div`
+	margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+	font-size: 16px;
+	font-weight: bold;
+`;
+
+const Input = styled.input`
+	width: 100%;
+	font-size: 14px;
+`;
+
+const Textarea = styled.textarea`
+	width: 100%;
+	font-size: 14px;
+	height: 100px;
+`;
+
 export const Add = () => {
 	var canSend = true;
-	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	const { Footer, Content } = Layout;
 
 	function makeId(length) {
@@ -18,36 +37,6 @@ export const Add = () => {
 		}
 		return result;
 	}
-
-	const SuccessDeleteAlertStyle = {
-		position: 'fixed',
-		display: `${successDeleteDisplay === true ? 'block' : 'none'}`,
-		zIndex: '2',
-
-		bottom: '2%',
-		width: '300px',
-		textAlign: 'center',
-	};
-
-	const Div = styled.div`
-		margin-bottom: 20px;
-	`;
-
-	const Label = styled.label`
-		font-size: 16px;
-		font-weight: bold;
-	`;
-
-	const Input = styled.input`
-		width: 100%;
-		font-size: 14px;
-	`;
-
-	const Textarea = styled.textarea`
-		width: 100%;
-		font-size: 14px;
-		height: 100px;
-	`;
 
 	let result = {
 		company: '',
@@ -67,12 +56,6 @@ export const Add = () => {
 		result[event.target.id] = event.target.value;
 		document.getElementById(event.target.id).style.border = '1px solid black';
 	}
-
-	const aLertTimeoutForDeleteSuccess = () => {
-		setTimeout(() => {
-			setSuccessDeleteDisplay(false);
-		}, 2000);
-	};
 
 	function handleSubmit() {
 		const newId = makeId(25);
@@ -105,8 +88,6 @@ export const Add = () => {
 			PostApiData(result, 'https://localhost:44318/api/Jobs');
 			window.location.reload(false);
 		} else {
-			//aLertTimeoutForDeleteSuccess();
-			//setSuccessDeleteDisplay(true);
 			canSend = true;
 		}
 	}
@@ -132,43 +113,43 @@ export const Add = () => {
 							<h3 style={{ marginTop: 25 }}>Add new advertisement</h3>
 						</legend>
 						<Div>
-							<Label for='company'>Company name:</Label>
+							<Label htmlFor='company'>Company name:</Label>
 							<br />
 							<Input type='text' id='company' onChange={handleChange} />
 						</Div>
 
 						<Div>
-							<Label for='company_url'>Website URL:</Label>
+							<Label htmlFor='company_url'>Website URL:</Label>
 							<br />
 							<Input type='text' id='company_url' onChange={handleChange} />
 						</Div>
 
 						<Div>
-							<Label for='company_logo'>Company logo URL:</Label>
+							<Label htmlFor='company_logo'>Company logo URL:</Label>
 							<br />
 							<Input type='text' id='company_logo' onChange={handleChange} />
 						</Div>
 
 						<Div>
-							<Label for='location'>Location:</Label>
+							<Label htmlFor='location'>Location:</Label>
 							<br />
 							<Input type='text' id='location' onChange={handleChange} />
 						</Div>
 
 						<Div>
-							<Label for='type'>Employment type:</Label>
+							<Label htmlFor='type'>Employment type:</Label>
 							<br />
 							<Input type='text' id='type' onChange={handleChange} />
 						</Div>
 
 						<Div>
-							<Label for='title'>Position:</Label>
+							<Label htmlFor='title'>Position:</Label>
 							<br />
 							<Input type='text' id='title' onChange={handleChange} />
 						</Div>
 
 						<Div>
-							<Label for='description'>Description:</Label>
+							<Label htmlFor='description'>Description:</Label>
 							<br />
 							<Textarea
 								type='text'
@@ -178,7 +159,7 @@ export const Add = () => {
 						</Div>
 
 						<Div>
-							<Label for='how_to_apply'>How to apply</Label>
+							<Label htmlFor='how_to_apply'>How to apply</Label>
 							<br />
 							<Input type='text' id='how_to_apply' onChange={handleChange} />
 						</Div>
@@ -186,13 +167,7 @@ export const Add = () => {
 				</form>
 			</Content>
 			<Footer style={{ alignSelf: 'center' }}>
-				<Alert
-					style={SuccessDeleteAlertStyle}
-					message='Fill all fields!!'
-					type='error'
-					showIcon
-				/>
-				<Button style={{ fontSize: 18 }} onClick={handleSubmit}>
+				<Button id={'submitButton'} style={{ fontSize: 18 }} onClick={handleSubmit}>
 					Send advertisement
 				</Button>
 			</Footer>
