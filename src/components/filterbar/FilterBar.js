@@ -97,6 +97,9 @@ export const FilterBar = () => {
 			);
 			setFilteredJobs(theTrueFilteredJobs.data);
 		} // 1 --> page number (have to be dynamic)
+		else {
+			resetFilters();
+		}
 	};
 
 	const changeCardListByLocation = async (e) => {
@@ -108,6 +111,8 @@ export const FilterBar = () => {
 				`https://localhost:44318/api/Filter/Location/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
+		} else {
+			resetFilters();
 		}
 	};
 
@@ -120,6 +125,8 @@ export const FilterBar = () => {
 				`https://localhost:44318/api/Filter/Company/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
+		} else {
+			resetFilters();
 		}
 	};
 
@@ -131,11 +138,17 @@ export const FilterBar = () => {
 				`https://localhost:44318/api/Filter/Title/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
+		} else {
+			resetFilters();
 		}
 	};
 
 	function resetFilters() {
 		setFilteredJobs(jobs);
+		setInputPositionValue('');
+		setInputTypeValue('');
+		setInputCompanyValue('');
+		setInputLocationValue('');
 	}
 
 	return (
