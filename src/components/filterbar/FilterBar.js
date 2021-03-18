@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { Menu, Input, AutoComplete } from 'antd';
 import styled from 'styled-components';
@@ -14,24 +14,35 @@ const StyledMenu = styled(Menu)`
 const Div = styled.div`
 	padding: 10px;
 `;
-
-export const FilterBar = React.memo(() => {
-	const { jobs } = useContext(JobContext); //get all job
+export const FilterBar = () => {
+	const [inputTypeValue, setInputTypeValue] = useState('');
+	const [inputPositionValue, setInputPositionValue] = useState('');
+	const [inputLocationValue, setInputLocationValue] = useState('');
+	const [inputCompanyValue, setInputCompanyValue] = useState('');
+	const { jobs } = useContext(JobContext);
 	const { setFilteredJobs } = useContext(FilteredJobContext);
 
 	useEffect(() => {
-		setFilteredJobs(jobs); //set all job to filtered jobs at render, and never again
-	}, []);
+		setFilteredJobs(jobs);
+	}, [setFilteredJobs, jobs]);
 
-	let optionsPositions = [];
-	let optionsType = [];
-	let optionsCompany = [];
-	let optionsLocation = [];
+	const typeFilter = document.getElementById('typeFilter');
+	const locationFilter = document.getElementById('locationFilter');
+	const companyFilter = document.getElementById('companyFilter');
+	const positionFilter = document.getElementById('positionFilter');
+	const [fetchCompany] = GetApiData('https://localhost:44318/api/Filter/Company');
+	const uniqueCompanies = fetchCompany;
+	const [fetchType] = GetApiData('https://localhost:44318/api/Filter/Type');
+	const uniqueTypes = fetchType;
+	const [fetchTitle] = GetApiData('https://localhost:44318/api/Filter/Title');
+	const uniquePositions = fetchTitle;
+	const [fetchLocation] = GetApiData('https://localhost:44318/api/Filter/Location');
+	const uniqueLocations = fetchLocation;
 
-	let [uniqueCompanies] = GetApiData('https://localhost:44318/api/Filter/Company');
-	let [uniqueTypes] = GetApiData('https://localhost:44318/api/Filter/Type');
-	let [uniquePositions] = GetApiData('https://localhost:44318/api/Filter/Title');
-	let [uniqueLocations] = GetApiData('https://localhost:44318/api/Filter/Location');
+	const optionsPositions = [];
+	const optionsType = [];
+	const optionsCompany = [];
+	const optionsLocation = [];
 
 	uniquePositions.map((position) =>
 		optionsPositions.push({
@@ -57,42 +68,81 @@ export const FilterBar = React.memo(() => {
 		})
 	);
 
+	const inputFiltersToEmpty = (usingFilter) => {
+		if (usingFilter === typeFilter.id) {
+			setInputPositionValue('');
+			setInputLocationValue('');
+			setInputCompanyValue('');
+		} else if (usingFilter === companyFilter.id) {
+			setInputPositionValue('');
+			setInputLocationValue('');
+			setInputTypeValue('');
+		} else if (usingFilter === positionFilter.id) {
+			setInputLocationValue('');
+			setInputTypeValue('');
+			setInputCompanyValue('');
+		} else if (usingFilter === locationFilter.id) {
+			setInputPositionValue('');
+			setInputTypeValue('');
+			setInputCompanyValue('');
+		}
+	};
 
 	const changeCardListByType = async (e) => {
-		const theTrueFilteredJobs = await GetDataFromFavorites(
-			`https://localhost:44318/api/Filter/Type/${e}/1`
-		); // 1 --> page number (have to be dynamic)
-		setFilteredJobs(theTrueFilteredJobs.data);
+		setInputTypeValue(typeFilter.value);
+		inputFiltersToEmpty(typeFilter.id);
+		if (typeFilter.value.length > 0) {
+			const theTrueFilteredJobs = await GetDataFromFavorites(
+				`https://localhost:44318/api/Filter/Type/${e}/1`
+			);
+			setFilteredJobs(theTrueFilteredJobs.data);
+		} // 1 --> page number (have to be dynamic)
 	};
 
 	const changeCardListByLocation = async (e) => {
-		const theTrueFilteredJobs = await GetDataFromFavorites(
-			`https://localhost:44318/api/Filter/Location/${e}/1`
-		); // 1 --> page number (have to be dynamic)
-		setFilteredJobs(theTrueFilteredJobs.data);
+		setInputLocationValue(locationFilter.value);
+		inputFiltersToEmpty(locationFilter.id);
+
+		if (locationFilter.value.length > 0) {
+			const theTrueFilteredJobs = await GetDataFromFavorites(
+				`https://localhost:44318/api/Filter/Location/${e}/1`
+			); // 1 --> page number (have to be dynamic)
+			setFilteredJobs(theTrueFilteredJobs.data);
+		}
 	};
 
 	const changeCardListByCompany = async (e) => {
-		const theTrueFilteredJobs = await GetDataFromFavorites(
-			`https://localhost:44318/api/Filter/Company/${e}/1`
-		); // 1 --> page number (have to be dynamic)
-		setFilteredJobs(theTrueFilteredJobs.data);
+		setInputCompanyValue(companyFilter.value);
+		inputFiltersToEmpty(companyFilter.id);
+
+		if (companyFilter.value.length > 0) {
+			const theTrueFilteredJobs = await GetDataFromFavorites(
+				`https://localhost:44318/api/Filter/Company/${e}/1`
+			); // 1 --> page number (have to be dynamic)
+			setFilteredJobs(theTrueFilteredJobs.data);
+		}
 	};
 
 	const changeCardListByPositions = async (e) => {
-		const theTrueFilteredJobs = await GetDataFromFavorites(
-			`https://localhost:44318/api/Filter/Title/${e}/1`
-		); // 1 --> page number (have to be dynamic)
-		setFilteredJobs(theTrueFilteredJobs.data);
+		setInputPositionValue(positionFilter.value);
+		inputFiltersToEmpty(positionFilter.id);
+		if (positionFilter.value.length > 0) {
+			const theTrueFilteredJobs = await GetDataFromFavorites(
+				`https://localhost:44318/api/Filter/Title/${e}/1`
+			); // 1 --> page number (have to be dynamic)
+			setFilteredJobs(theTrueFilteredJobs.data);
+		}
 	};
 
 	function resetFilters() {
 		setFilteredJobs(jobs);
 	}
+
 	return (
 		<StyledMenu>
 			<Div>
 				<AutoComplete
+					value={inputTypeValue}
 					id={'typeFilter'}
 					dropdownClassName='certain-category-search-dropdown'
 					dropdownMatchSelectWidth={300}
@@ -110,6 +160,7 @@ export const FilterBar = React.memo(() => {
 			</Div>
 			<Div>
 				<AutoComplete
+					value={inputLocationValue}
 					id={'locationFilter'}
 					dropdownClassName='certain-category-search-dropdown'
 					dropdownMatchSelectWidth={300}
@@ -122,11 +173,12 @@ export const FilterBar = React.memo(() => {
 					}
 					onChange={changeCardListByLocation}
 				>
-					<Input.Search size='large' placeholder='Location' />
+					<Input.Search id={'locationInput'} size='large' placeholder='Location' />
 				</AutoComplete>
 			</Div>
 			<Div>
 				<AutoComplete
+					value={inputCompanyValue}
 					id={'companyFilter'}
 					dropdownClassName='certain-category-search-dropdown'
 					dropdownMatchSelectWidth={300}
@@ -144,6 +196,7 @@ export const FilterBar = React.memo(() => {
 			</Div>
 			<Div>
 				<AutoComplete
+					value={inputPositionValue}
 					id={'positionFilter'}
 					dropdownClassName='certain-category-search-dropdown'
 					dropdownMatchSelectWidth={800}
@@ -174,6 +227,6 @@ export const FilterBar = React.memo(() => {
 			</div>
 		</StyledMenu>
 	);
-});
+};
 
 export default FilterBar;
