@@ -89,9 +89,9 @@ export const FilterBar = () => {
 	};
 
 	const changeCardListByType = async (e) => {
-		setInputTypeValue(typeFilter.value);
+		setInputTypeValue(e);
 		inputFiltersToEmpty(typeFilter.id);
-		if (typeFilter.value.length > 0) {
+		if (e.length > 0) {
 			const theTrueFilteredJobs = await GetDataFromFavorites(
 				`https://localhost:44318/api/Filter/Type/${e}/1`
 			);
@@ -100,10 +100,10 @@ export const FilterBar = () => {
 	};
 
 	const changeCardListByLocation = async (e) => {
-		setInputLocationValue(locationFilter.value);
+		setInputLocationValue(e);
 		inputFiltersToEmpty(locationFilter.id);
 
-		if (locationFilter.value.length > 0) {
+		if (e.length > 0) {
 			const theTrueFilteredJobs = await GetDataFromFavorites(
 				`https://localhost:44318/api/Filter/Location/${e}/1`
 			); // 1 --> page number (have to be dynamic)
@@ -112,10 +112,10 @@ export const FilterBar = () => {
 	};
 
 	const changeCardListByCompany = async (e) => {
-		setInputCompanyValue(companyFilter.value);
+		setInputCompanyValue(e);
 		inputFiltersToEmpty(companyFilter.id);
 
-		if (companyFilter.value.length > 0) {
+		if (e.length > 0) {
 			const theTrueFilteredJobs = await GetDataFromFavorites(
 				`https://localhost:44318/api/Filter/Company/${e}/1`
 			); // 1 --> page number (have to be dynamic)
@@ -124,9 +124,9 @@ export const FilterBar = () => {
 	};
 
 	const changeCardListByPositions = async (e) => {
-		setInputPositionValue(positionFilter.value);
+		setInputPositionValue(e);
 		inputFiltersToEmpty(positionFilter.id);
-		if (positionFilter.value.length > 0) {
+		if (e.length > 0) {
 			const theTrueFilteredJobs = await GetDataFromFavorites(
 				`https://localhost:44318/api/Filter/Title/${e}/1`
 			); // 1 --> page number (have to be dynamic)
