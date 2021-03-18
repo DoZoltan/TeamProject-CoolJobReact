@@ -18,12 +18,11 @@ const Div = styled.div`
 	position: fixed;
 	float: left;
 `;
-const MemoizedSubComponent = React.memo(FilterBar);
 export const JobsBox = () => {
 	return (
 		<React.Fragment>
 			<Div>
-				<MemoizedSubComponent />
+				<FilterBar />
 			</Div>
 			<StyledDiv>
 				<JobsDiv>
