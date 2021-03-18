@@ -19,7 +19,6 @@ const MainDiv = styled.div`
 
 export const FavoriteBox = () => {
 	const { ReloadFavoriteJobs } = useContext(FavoriteJobContext);
-
 	ReloadFavoriteJobs();
 
 	return (
