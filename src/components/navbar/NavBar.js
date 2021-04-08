@@ -41,6 +41,17 @@ export const NavBar = () => {
 							Add advertisement
 						</Link>
 					</Menu.Item>
+					<Menu.Item key='5' style={{ float: 'right' }}>
+						<Link id={'linkToRegistration'} to='/registration'>
+							Registration
+						</Link>
+					</Menu.Item>
+					<Menu.Item key='6' style={{ float: 'right' }}>
+						<Link id={'linkToLogin'} to='/login'>
+							Login
+						</Link>
+					</Menu.Item>
+
 					<Button
 						id={'reloadButton'}
 						style={{
