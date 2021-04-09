@@ -18,6 +18,7 @@
 ## Used technologies
 - NodeJs : v15.7.0
 - NPM package manager : 6.14.11
+- React
 
 ## How to launch while it is not deployed
 1. Download the project
