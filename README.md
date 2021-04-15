@@ -16,8 +16,8 @@
 - Apply for a job
 
 ## Used technologies
-- NodeJs : v15.7.0
-- NPM package manager : 6.14.11
+- NodeJs
+- NPM package manager
 - React
 
 ## How to launch while it is not deployed
