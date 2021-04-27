@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
-//import { FilteredJobContext } from '../../Contexts/FilteredJobsContext';
 import JobCard from './JobCard';
 import { Row } from 'antd';
 import { TheContext } from '../../Contexts/TheContext';
 
 export const JobsList = () => {
-	//const { filteredJobs } = useContext(FilteredJobContext);
 	const { filteredJobs } = useContext(TheContext);
 
 	return (

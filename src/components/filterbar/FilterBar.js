@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { Menu, Input, AutoComplete } from 'antd';
 import styled from 'styled-components';
-//import { FilteredJobContext } from '../../Contexts/FilteredJobsContext';
-//import { JobContext } from '../../Contexts/JobContext';
 import { TheContext } from '../../Contexts/TheContext';
 import { GetApiData } from '../../hook/GetApiData';
 import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
@@ -23,8 +21,6 @@ export const FilterBar = () => {
 	const { axiosData, setFilteredJobs, AxiosGet } = useContext(TheContext);
 
 	AxiosGet('https://localhost:44318/api/Jobs');
-
-	//const { setFilteredJobs } = useContext(FilteredJobContext);
 
 	useEffect(() => {
 		setFilteredJobs(axiosData);
@@ -148,7 +144,6 @@ export const FilterBar = () => {
 	};
 
 	function resetFilters() {
-		//setFilteredJobs(jobs);
 		setFilteredJobs(axiosData);
 
 		setInputPositionValue('');
