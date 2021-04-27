@@ -5,6 +5,8 @@ import { FavoriteJobProvider } from './Contexts/FavoriteJobContext';
 import { OnJobProvider } from './Contexts/OnJobContext';
 import { FilteredJobProvider } from './Contexts/FilteredJobsContext';
 
+import { TheProvider } from './Contexts/TheContext';
+
 import NavBar from './components/navbar/NavBar';
 import Main from './components/mainPage/Main';
 import JobsBox from './components/jobsPage/JobsBox';
@@ -17,35 +19,40 @@ import RegistrationPage from './components/registration/RegistrationPage';
 
 const App = () => {
 	return (
-		<FilteredJobProvider>
-			<OnJobProvider>
-				<FavoriteJobProvider>
-					<JobDetailProvider>
-						<Router>
-							<JobProvider>
-								<div>
+		<TheProvider>
+			<FilteredJobProvider>
+				<OnJobProvider>
+					<FavoriteJobProvider>
+						<JobDetailProvider>
+							<Router>
+								<JobProvider>
 									<div>
-										<NavBar />
+										<div>
+											<NavBar />
+										</div>
+										<div>
+											<Route exact path='/'>
+												<Redirect to='/main' />
+											</Route>
+											<Route path='/main' component={Main} />
+											<Route path='/jobs' component={JobsBox} />
+											<Route path='/favorite' component={FavoriteBox} />
+											<Route path='/add' component={Add} />
+											<Route path='/detail' component={DetailBox} />
+											<Route path='/login' component={LoginPage} />
+											<Route
+												path='/registration'
+												component={RegistrationPage}
+											/>
+										</div>
 									</div>
-									<div>
-										<Route exact path='/'>
-											<Redirect to='/main' />
-										</Route>
-										<Route path='/main' component={Main} />
-										<Route path='/jobs' component={JobsBox} />
-										<Route path='/favorite' component={FavoriteBox} />
-										<Route path='/add' component={Add} />
-										<Route path='/detail' component={DetailBox} />
-										<Route path='/login' component={LoginPage} />
-										<Route path='/registration' component={RegistrationPage} />
-									</div>
-								</div>
-							</JobProvider>
-						</Router>
-					</JobDetailProvider>
-				</FavoriteJobProvider>
-			</OnJobProvider>
-		</FilteredJobProvider>
+								</JobProvider>
+							</Router>
+						</JobDetailProvider>
+					</FavoriteJobProvider>
+				</OnJobProvider>
+			</FilteredJobProvider>
+		</TheProvider>
 	);
 };
 
