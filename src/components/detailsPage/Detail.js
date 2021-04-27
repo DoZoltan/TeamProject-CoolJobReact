@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { JobDetailContext } from '../../Contexts/JobDetailContext';
+import { TheContext } from '../../Contexts/TheContext';
 import 'antd/dist/antd.css';
 import { Layout, Image, Button, Alert } from 'antd';
 import { OnJobContext } from '../../Contexts/OnJobContext';
@@ -18,7 +18,7 @@ const StyleImage = {
 };
 export const Detail = () => {
 	const { Header, Footer, Content } = Layout;
-	const { detail } = useContext(JobDetailContext);
+	const { detail } = useContext(TheContext);
 	const { onJob } = useContext(OnJobContext);
 	const [successDisplay, setSuccessDisplay] = useState(false);
 	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
