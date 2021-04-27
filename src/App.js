@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { JobProvider } from './Contexts/JobContext';
 //import { FavoriteJobProvider } from './Contexts/FavoriteJobContext';
 import { OnJobProvider } from './Contexts/OnJobContext';
-import { FilteredJobProvider } from './Contexts/FilteredJobsContext';
+//import { FilteredJobProvider } from './Contexts/FilteredJobsContext';
 
 import { TheProvider } from './Contexts/TheContext';
 
@@ -20,33 +20,31 @@ import RegistrationPage from './components/registration/RegistrationPage';
 const App = () => {
 	return (
 		<TheProvider>
-			<FilteredJobProvider>
-				<OnJobProvider>
-					<JobDetailProvider>
-						<Router>
-							<JobProvider>
+			<OnJobProvider>
+				<JobDetailProvider>
+					<Router>
+						<JobProvider>
+							<div>
 								<div>
-									<div>
-										<NavBar />
-									</div>
-									<div>
-										<Route exact path='/'>
-											<Redirect to='/main' />
-										</Route>
-										<Route path='/main' component={Main} />
-										<Route path='/jobs' component={JobsBox} />
-										<Route path='/favorite' component={FavoriteBox} />
-										<Route path='/add' component={Add} />
-										<Route path='/detail' component={DetailBox} />
-										<Route path='/login' component={LoginPage} />
-										<Route path='/registration' component={RegistrationPage} />
-									</div>
+									<NavBar />
 								</div>
-							</JobProvider>
-						</Router>
-					</JobDetailProvider>
-				</OnJobProvider>
-			</FilteredJobProvider>
+								<div>
+									<Route exact path='/'>
+										<Redirect to='/main' />
+									</Route>
+									<Route path='/main' component={Main} />
+									<Route path='/jobs' component={JobsBox} />
+									<Route path='/favorite' component={FavoriteBox} />
+									<Route path='/add' component={Add} />
+									<Route path='/detail' component={DetailBox} />
+									<Route path='/login' component={LoginPage} />
+									<Route path='/registration' component={RegistrationPage} />
+								</div>
+							</div>
+						</JobProvider>
+					</Router>
+				</JobDetailProvider>
+			</OnJobProvider>
 		</TheProvider>
 	);
 };
