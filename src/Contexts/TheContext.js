@@ -9,6 +9,7 @@ export const TheProvider = (props) => {
 	const [axiosError, setAxiosError] = useState([]); //be null
 	const [user, setUser] = useState(2); //be null (at it will be an object)
 	const [filteredJobs, setFilteredJobs] = useState([]);
+	const [detail, setDetail] = useState([]);
 
 	const AxiosGet = (url) => {
 		const { data, isLoading, error } = useAxiosGet(url);
@@ -18,7 +19,9 @@ export const TheProvider = (props) => {
 	};
 
 	return (
-		<TheContext.Provider value={{ axiosData, user, filteredJobs, setFilteredJobs, AxiosGet }}>
+		<TheContext.Provider
+			value={{ axiosData, user, filteredJobs, detail, setDetail, setFilteredJobs, AxiosGet }}
+		>
 			{props.children}
 		</TheContext.Provider>
 	);
