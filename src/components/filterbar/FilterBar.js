@@ -3,7 +3,8 @@ import 'antd/dist/antd.css';
 import { Menu, Input, AutoComplete } from 'antd';
 import styled from 'styled-components';
 import { FilteredJobContext } from '../../Contexts/FilteredJobsContext';
-import { JobContext } from '../../Contexts/JobContext';
+//import { JobContext } from '../../Contexts/JobContext';
+import { TheContext } from '../../Contexts/TheContext';
 import { GetApiData } from '../../hook/GetApiData';
 import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
 
@@ -19,12 +20,22 @@ export const FilterBar = () => {
 	const [inputPositionValue, setInputPositionValue] = useState('');
 	const [inputLocationValue, setInputLocationValue] = useState('');
 	const [inputCompanyValue, setInputCompanyValue] = useState('');
-	const { jobs } = useContext(JobContext);
+	//const { jobs } = useContext(JobContext);
+	const { axiosData, AxiosGet } = useContext(TheContext);
+
+	AxiosGet('https://localhost:44318/api/Jobs');
+
 	const { setFilteredJobs } = useContext(FilteredJobContext);
 
+	/*
 	useEffect(() => {
 		setFilteredJobs(jobs);
 	}, [setFilteredJobs, jobs]);
+	*/
+
+	useEffect(() => {
+		setFilteredJobs(axiosData);
+	}, [setFilteredJobs, axiosData]);
 
 	const typeFilter = document.getElementById('typeFilter');
 	const locationFilter = document.getElementById('locationFilter');
@@ -144,7 +155,9 @@ export const FilterBar = () => {
 	};
 
 	function resetFilters() {
-		setFilteredJobs(jobs);
+		//setFilteredJobs(jobs);
+		setFilteredJobs(axiosData);
+
 		setInputPositionValue('');
 		setInputTypeValue('');
 		setInputCompanyValue('');
