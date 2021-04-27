@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
-import { FavoriteJobContext } from '../../Contexts/FavoriteJobContext';
+//import { FavoriteJobContext } from '../../Contexts/FavoriteJobContext';
 import JobCard from '../jobsPage/JobCard';
 import { Row } from 'antd';
+import { TheContext } from '../../Contexts/TheContext';
 
 export const FavoriteList = () => {
-	const { favoriteJobs } = useContext(FavoriteJobContext);
+	//const { favoriteJobs } = useContext(FavoriteJobContext);
+	const { axiosData } = useContext(TheContext);
 
 	return (
 		<Row gutter={16}>
-			{favoriteJobs.map((job) => (
+			{axiosData.map((job) => (
 				<JobCard
 					key={job.id}
 					id={job.id}
