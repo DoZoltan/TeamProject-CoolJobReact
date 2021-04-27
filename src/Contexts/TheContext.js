@@ -7,6 +7,7 @@ export const TheProvider = (props) => {
 	const [axiosData, setAxiosData] = useState([]); //be null
 	const [axiosIsLoading, setAxiosIsLoading] = useState([]); //be null
 	const [axiosError, setAxiosError] = useState([]); //be null
+	const [user, setUser] = useState(2); //be null
 
 	const AxiosGet = (url) => {
 		const { data, isLoading, error } = useAxiosGet(url);
@@ -16,7 +17,9 @@ export const TheProvider = (props) => {
 	};
 
 	return (
-		<TheContext.Provider value={{ axiosData, AxiosGet }}>{props.children}</TheContext.Provider>
+		<TheContext.Provider value={{ axiosData, user, AxiosGet }}>
+			{props.children}
+		</TheContext.Provider>
 	);
 };
 
