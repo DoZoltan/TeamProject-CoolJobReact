@@ -27,7 +27,7 @@ export const Detail = () => {
 	useEffect(() => {
 		const jobExistInFavorite = async () => {
 			let fetchData = await GetDataFromFavorites(
-				`https://localhost:44318/api/Favorites/${detail.id}/0`
+				`https://localhost:44318/api/Favorites/${detail.id}/2`
 			); // 0 --> the id of the user
 			var count = Object.keys(fetchData.data).length;
 			if (count > 0) {
@@ -46,7 +46,7 @@ export const Detail = () => {
 	const history = useHistory();
 
 	const DeleteJobFromFavoriteList = async () => {
-		await DeleteApiData(`https://localhost:44318/api/Favorites/${detail.id}/0`);
+		await DeleteApiData(`https://localhost:44318/api/Favorites/${detail.id}/2`);
 		if (onJob === false) history.push('/favorite');
 		// 0 --> the id of the user
 	};
