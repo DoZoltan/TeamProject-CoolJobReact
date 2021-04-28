@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import { Menu, Input, AutoComplete } from 'antd';
+import { Menu, Input, AutoComplete, Button } from 'antd';
 import styled from 'styled-components';
 import { TheContext } from '../../Contexts/TheContext';
 import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
 import useAxiosGet from '../../axios/useAxiosGet';
 
 const StyledMenu = styled(Menu)`
-	width: 200px;
+	width: 215px;
 `;
 
-const Div = styled.div`
-	padding: 10px;
+const MenuItem = styled(Menu.Item)`
+	height: 50px !important;
 `;
 export const FilterBar = () => {
 	const [inputTypeValue, setInputTypeValue] = useState('');
@@ -150,7 +150,7 @@ export const FilterBar = () => {
 
 	return (
 		<StyledMenu>
-			<Div>
+			<MenuItem key='1'>
 				<AutoComplete
 					value={inputTypeValue}
 					id={'typeFilter'}
@@ -167,8 +167,8 @@ export const FilterBar = () => {
 				>
 					<Input.Search size='large' placeholder='Type' />
 				</AutoComplete>
-			</Div>
-			<Div>
+			</MenuItem>
+			<MenuItem key='2'>
 				<AutoComplete
 					value={inputLocationValue}
 					id={'locationFilter'}
@@ -185,8 +185,8 @@ export const FilterBar = () => {
 				>
 					<Input.Search id={'locationInput'} size='large' placeholder='Location' />
 				</AutoComplete>
-			</Div>
-			<Div>
+			</MenuItem>
+			<MenuItem key='3'>
 				<AutoComplete
 					value={inputCompanyValue}
 					id={'companyFilter'}
@@ -203,8 +203,8 @@ export const FilterBar = () => {
 				>
 					<Input.Search size='large' placeholder='Company' />
 				</AutoComplete>
-			</Div>
-			<Div>
+			</MenuItem>
+			<MenuItem key='4'>
 				<AutoComplete
 					value={inputPositionValue}
 					id={'positionFilter'}
@@ -221,20 +221,13 @@ export const FilterBar = () => {
 				>
 					<Input.Search size='large' placeholder='Position' />
 				</AutoComplete>
-			</Div>
-			<div>
-				<button
-					id={'resetFilterButton'}
-					style={{
-						width: 100,
-						height: 25,
-						marginLeft: 10,
-					}}
-					onClick={resetFilters}
-				>
+			</MenuItem>
+
+			<MenuItem key='5'>
+				<Button id={'resetFilterButton'} onClick={resetFilters}>
 					Reset Filters
-				</button>
-			</div>
+				</Button>
+			</MenuItem>
 		</StyledMenu>
 	);
 };
