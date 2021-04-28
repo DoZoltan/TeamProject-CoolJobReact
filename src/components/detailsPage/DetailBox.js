@@ -4,21 +4,20 @@ import Detail from './Detail';
 import FilterBar from '../filterbar/FilterBar';
 import { BackTop } from 'antd';
 
+const DetailDiv = styled.div`
+	background-color: black;
+`;
+
+const StyledDiv = styled.div`
+	width: 85%;
+	float: right;
+`;
+
+const Div = styled.div`
+	position: fixed;
+	float: left;
+`;
 export const DetailBox = () => {
-	const DetailDiv = styled.div`
-		background-color: black;
-	`;
-
-	const StyledDiv = styled.div`
-		width: 85%;
-		float: right;
-	`;
-
-	const Div = styled.div`
-		position: fixed;
-		float: left;
-	`;
-
 	return (
 		<React.Fragment>
 			<Div>
