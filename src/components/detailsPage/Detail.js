@@ -5,7 +5,7 @@ import { Layout, Image, Button, Alert } from 'antd';
 import UseAxiosPostForJob from '../../axios/useAxiosPostForJob';
 import useAxiosDelete from '../../axios/useAxiosDelete';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
 
 const StyleImage = {
 	display: 'block',
@@ -23,7 +23,9 @@ export const Detail = () => {
 
 	useEffect(() => {
 		const JobExistInFavorite = async () => {
-			let fetchData = await axios.get(`https://localhost:44318/api/Favorites/${detail.id}/2`); // 0 --> the id of the user
+			let fetchData = await UseSimpleGetAxios(
+				`https://localhost:44318/api/Favorites/${detail.id}/2`
+			); // 0 --> the id of the user
 			var count = Object.keys(fetchData.data).length;
 			if (count > 0) {
 				setExistInFavorite(true);
