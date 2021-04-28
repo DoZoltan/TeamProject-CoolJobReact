@@ -1,13 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { TheContext } from '../../Contexts/TheContext';
 import 'antd/dist/antd.css';
 import { Layout, Image, Button, Alert } from 'antd';
 import UseAxiosPostForJob from '../../axios/useAxiosPostForJob';
 import useAxiosDelete from '../../axios/useAxiosDelete';
-import useAxiosGet from '../../axios/useAxiosGet';
 import { useHistory } from 'react-router-dom';
-import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
 import axios from 'axios';
 
 const StyleImage = {
@@ -19,23 +16,23 @@ const StyleImage = {
 };
 export const Detail = () => {
 	const { Header, Footer, Content } = Layout;
-	const { detail, axiosData, AxiosGet } = useContext(TheContext);
+	const { detail } = useContext(TheContext);
 	const [successDisplay, setSuccessDisplay] = useState(false);
 	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	const [existInFavorite, setExistInFavorite] = useState(false);
 
-	const JobExistInFavorite = async () => {
-		let fetchData = await axios.get(`https://localhost:44318/api/Favorites/${detail.id}/2`); // 0 --> the id of the user
-		var count = Object.keys(fetchData.data).length;
-		if (count > 0) {
-			setExistInFavorite(true);
-		} else {
-			setExistInFavorite(false);
-		}
-	};
 	useEffect(() => {
+		const JobExistInFavorite = async () => {
+			let fetchData = await axios.get(`https://localhost:44318/api/Favorites/${detail.id}/2`); // 0 --> the id of the user
+			var count = Object.keys(fetchData.data).length;
+			if (count > 0) {
+				setExistInFavorite(true);
+			} else {
+				setExistInFavorite(false);
+			}
+		};
 		JobExistInFavorite();
-	}, []);
+	}, [detail.id]);
 
 	const AddJobToFavoriteList = () => {
 		UseAxiosPostForJob(detail, 'https://localhost:44318/api/Favorites');
