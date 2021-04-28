@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Menu, Input, AutoComplete, Button } from 'antd';
 import styled from 'styled-components';
 import { TheContext } from '../../Contexts/TheContext';
-import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
+import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
 import useAxiosGet from '../../axios/useAxiosGet';
 
 const StyledMenu = styled(Menu)`
@@ -88,7 +88,7 @@ export const FilterBar = () => {
 		setInputTypeValue(e);
 		inputFiltersToEmpty(typeFilter.id);
 		if (e.length > 0) {
-			const theTrueFilteredJobs = await GetDataFromFavorites(
+			const theTrueFilteredJobs = await UseSimpleGetAxios(
 				`https://localhost:44318/api/Filter/Type/${e}/1`
 			);
 			setFilteredJobs(theTrueFilteredJobs.data);
@@ -103,7 +103,7 @@ export const FilterBar = () => {
 		inputFiltersToEmpty(locationFilter.id);
 
 		if (e.length > 0) {
-			const theTrueFilteredJobs = await GetDataFromFavorites(
+			const theTrueFilteredJobs = await UseSimpleGetAxios(
 				`https://localhost:44318/api/Filter/Location/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
@@ -117,7 +117,7 @@ export const FilterBar = () => {
 		inputFiltersToEmpty(companyFilter.id);
 
 		if (e.length > 0) {
-			const theTrueFilteredJobs = await GetDataFromFavorites(
+			const theTrueFilteredJobs = await UseSimpleGetAxios(
 				`https://localhost:44318/api/Filter/Company/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
@@ -130,7 +130,7 @@ export const FilterBar = () => {
 		setInputPositionValue(e);
 		inputFiltersToEmpty(positionFilter.id);
 		if (e.length > 0) {
-			const theTrueFilteredJobs = await GetDataFromFavorites(
+			const theTrueFilteredJobs = await UseSimpleGetAxios(
 				`https://localhost:44318/api/Filter/Title/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
