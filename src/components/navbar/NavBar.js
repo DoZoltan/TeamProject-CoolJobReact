@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 
@@ -49,20 +49,18 @@ export const NavBar = () => {
 						</Link>
 					</Menu.Item>
 
-					<Button
-						key='button-reload'
+					<Menu.Item
+						key='7'
 						id={'reloadButton'}
 						style={{
 							color: 'white',
 							backgroundColor: '#2F4F4F',
-							marginTop: '15px',
-							marginRight: '15px',
 							float: 'right',
 						}}
 						onClick={() => window.location.reload(false)}
 					>
 						Click to reload!
-					</Button>
+					</Menu.Item>
 				</Menu>
 			</StickyHeader>
 		</Header>
