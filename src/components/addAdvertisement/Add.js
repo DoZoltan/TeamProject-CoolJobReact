@@ -2,7 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Layout, Button } from 'antd';
 import styled from 'styled-components';
-import { PostApiData } from '../../hook/PostApiData';
+import UseAxiosPostForJob from '../../axios/useAxiosPostForJob';
 
 const Div = styled.div`
 	margin-bottom: 20px;
@@ -85,7 +85,7 @@ export const Add = () => {
 			}
 		}
 		if (canSend === true) {
-			PostApiData(result, 'https://localhost:44318/api/Jobs');
+			UseAxiosPostForJob(result, 'https://localhost:44318/api/Jobs');
 			window.location.reload(false);
 		} else {
 			canSend = true;
