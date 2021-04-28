@@ -3,8 +3,8 @@ import 'antd/dist/antd.css';
 import { Menu, Input, AutoComplete } from 'antd';
 import styled from 'styled-components';
 import { TheContext } from '../../Contexts/TheContext';
-import { GetApiData } from '../../hook/GetApiData';
 import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
+import useAxiosGet from '../../axios/useAxiosGet';
 
 const StyledMenu = styled(Menu)`
 	width: 200px;
@@ -24,20 +24,16 @@ export const FilterBar = () => {
 
 	useEffect(() => {
 		setFilteredJobs(axiosData);
-	}, [axiosData]);
+	}, [setFilteredJobs, axiosData]);
 
 	const typeFilter = document.getElementById('typeFilter');
 	const locationFilter = document.getElementById('locationFilter');
 	const companyFilter = document.getElementById('companyFilter');
 	const positionFilter = document.getElementById('positionFilter');
-	const [fetchCompany] = GetApiData('https://localhost:44318/api/Filter/Company');
-	const uniqueCompanies = fetchCompany;
-	const [fetchType] = GetApiData('https://localhost:44318/api/Filter/Type');
-	const uniqueTypes = fetchType;
-	const [fetchTitle] = GetApiData('https://localhost:44318/api/Filter/Title');
-	const uniquePositions = fetchTitle;
-	const [fetchLocation] = GetApiData('https://localhost:44318/api/Filter/Location');
-	const uniqueLocations = fetchLocation;
+	const { data: uniqueCompanies } = useAxiosGet('https://localhost:44318/api/Filter/Company');
+	const { data: uniqueTypes } = useAxiosGet('https://localhost:44318/api/Filter/Type');
+	const { data: uniquePositions } = useAxiosGet('https://localhost:44318/api/Filter/Title');
+	const { data: uniqueLocations } = useAxiosGet('https://localhost:44318/api/Filter/Location');
 
 	const optionsPositions = [];
 	const optionsType = [];
