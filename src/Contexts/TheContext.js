@@ -10,9 +10,10 @@ export const TheProvider = (props) => {
 	const [user, setUser] = useState(2); //be null (at it will be an object)
 	const [filteredJobs, setFilteredJobs] = useState([]);
 	const [detail, setDetail] = useState([]);
+	const [onJob, setOnJob] = useState(true);
 
-	const AxiosGet = (url) => {
-		const { data, isLoading, error } = useAxiosGet(url);
+	const AxiosGet = async (url) => {
+		const { data, isLoading, error } = await useAxiosGet(url);
 		setAxiosData(data);
 		setAxiosIsLoading(isLoading);
 		setAxiosError(error);
@@ -20,7 +21,17 @@ export const TheProvider = (props) => {
 
 	return (
 		<TheContext.Provider
-			value={{ axiosData, user, filteredJobs, detail, setDetail, setFilteredJobs, AxiosGet }}
+			value={{
+				onJob,
+				axiosData,
+				user,
+				filteredJobs,
+				detail,
+				setOnJob,
+				setDetail,
+				setFilteredJobs,
+				AxiosGet,
+			}}
 		>
 			{props.children}
 		</TheContext.Provider>
