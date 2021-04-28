@@ -22,6 +22,8 @@ export const TheProvider = (props) => {
 	return (
 		<TheContext.Provider
 			value={{
+				axiosIsLoading,
+				axiosError,
 				onJob,
 				axiosData,
 				user,
@@ -31,6 +33,7 @@ export const TheProvider = (props) => {
 				setDetail,
 				setFilteredJobs,
 				AxiosGet,
+				setUser,
 			}}
 		>
 			{props.children}
