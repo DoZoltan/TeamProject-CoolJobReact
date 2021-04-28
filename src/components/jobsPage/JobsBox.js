@@ -2,7 +2,6 @@ import FilterBar from '../filterbar/FilterBar';
 import React from 'react';
 import JobsList from './JobsList';
 import styled from 'styled-components';
-import { BackTop } from 'antd';
 
 const StyledDiv = styled.div`
 	width: 85%;
@@ -29,7 +28,6 @@ export const JobsBox = () => {
 					<JobsList />
 				</JobsDiv>
 			</StyledDiv>
-			<BackTop />
 		</React.Fragment>
 	);
 };
