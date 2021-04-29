@@ -13,6 +13,7 @@ const StyledMenu = styled(Menu)`
 const MenuItem = styled(Menu.Item)`
 	height: 50px !important;
 `;
+
 export const FilterBar = () => {
 	const [inputTypeValue, setInputTypeValue] = useState('');
 	const [inputPositionValue, setInputPositionValue] = useState('');
@@ -30,6 +31,7 @@ export const FilterBar = () => {
 	const locationFilter = document.getElementById('locationFilter');
 	const companyFilter = document.getElementById('companyFilter');
 	const positionFilter = document.getElementById('positionFilter');
+
 	const { data: uniqueCompanies } = useAxiosGet('https://localhost:44318/api/Filter/Company');
 	const { data: uniqueTypes } = useAxiosGet('https://localhost:44318/api/Filter/Type');
 	const { data: uniquePositions } = useAxiosGet('https://localhost:44318/api/Filter/Title');
@@ -40,29 +42,36 @@ export const FilterBar = () => {
 	const optionsCompany = [];
 	const optionsLocation = [];
 
-	uniquePositions.map((position) =>
-		optionsPositions.push({
-			value: position,
-		})
-	);
+	if (
+		uniqueCompanies !== null &&
+		uniqueTypes !== null &&
+		uniquePositions !== null &&
+		uniqueLocations !== null
+	) {
+		uniquePositions.map((position) =>
+			optionsPositions.push({
+				value: position,
+			})
+		);
 
-	uniqueTypes.map((type) =>
-		optionsType.push({
-			value: type,
-		})
-	);
+		uniqueTypes.map((type) =>
+			optionsType.push({
+				value: type,
+			})
+		);
 
-	uniqueCompanies.map((company) =>
-		optionsCompany.push({
-			value: company,
-		})
-	);
+		uniqueCompanies.map((company) =>
+			optionsCompany.push({
+				value: company,
+			})
+		);
 
-	uniqueLocations.map((location) =>
-		optionsLocation.push({
-			value: location,
-		})
-	);
+		uniqueLocations.map((location) =>
+			optionsLocation.push({
+				value: location,
+			})
+		);
+	}
 
 	const inputFiltersToEmpty = (usingFilter) => {
 		if (usingFilter === typeFilter.id) {
