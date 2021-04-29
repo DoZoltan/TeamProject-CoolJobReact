@@ -1,13 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { JobDetailContext } from '../../Contexts/JobDetailContext';
+import { TheContext } from '../../Contexts/TheContext';
 import 'antd/dist/antd.css';
 import { Layout, Image, Button, Alert } from 'antd';
-import { OnJobContext } from '../../Contexts/OnJobContext';
-import { PostApiData } from '../../hook/PostApiData';
-import { DeleteApiData } from '../../hook/DeleteApiData';
+import UseAxiosPostForJob from '../../axios/useAxiosPostForJob';
+import useAxiosDelete from '../../axios/useAxiosDelete';
 import { useHistory } from 'react-router-dom';
-import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
+import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
 
 const StyleImage = {
 	display: 'block',
@@ -18,16 +16,15 @@ const StyleImage = {
 };
 export const Detail = () => {
 	const { Header, Footer, Content } = Layout;
-	const { detail } = useContext(JobDetailContext);
-	const { onJob } = useContext(OnJobContext);
+	const { detail } = useContext(TheContext);
 	const [successDisplay, setSuccessDisplay] = useState(false);
 	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	const [existInFavorite, setExistInFavorite] = useState(false);
 
 	useEffect(() => {
-		const jobExistInFavorite = async () => {
-			let fetchData = await GetDataFromFavorites(
-				`https://localhost:44318/api/Favorites/${detail.id}/0`
+		const JobExistInFavorite = async () => {
+			let fetchData = await UseSimpleGetAxios(
+				`https://localhost:44318/api/Favorites/${detail.id}/2`
 			); // 0 --> the id of the user
 			var count = Object.keys(fetchData.data).length;
 			if (count > 0) {
@@ -36,28 +33,28 @@ export const Detail = () => {
 				setExistInFavorite(false);
 			}
 		};
-		jobExistInFavorite();
+		JobExistInFavorite();
 	}, [detail.id]);
 
 	const AddJobToFavoriteList = () => {
-		PostApiData(detail, 'https://localhost:44318/api/Favorites');
+		UseAxiosPostForJob(detail, 'https://localhost:44318/api/Favorites');
 	};
 
 	const history = useHistory();
 
 	const DeleteJobFromFavoriteList = async () => {
-		await DeleteApiData(`https://localhost:44318/api/Favorites/${detail.id}/0`);
-		if (onJob === false) history.push('/favorite');
+		await useAxiosDelete(`https://localhost:44318/api/Favorites/${detail.id}/2`);
+		// history.go(-1);
 		// 0 --> the id of the user
 	};
 
-	const aLertTimeoutForAddSuccess = () => {
+	const alertTimeoutForAddSuccess = () => {
 		setTimeout(() => {
 			setSuccessDisplay(false);
 		}, 2000);
 	};
 
-	const aLertTimeoutForDeleteSuccess = () => {
+	const alertTimeoutForDeleteSuccess = () => {
 		setTimeout(() => {
 			setSuccessDeleteDisplay(false);
 		}, 2000);
@@ -86,19 +83,21 @@ export const Detail = () => {
 	return (
 		<Layout>
 			<Header id={'header'} style={{ color: '#F5FFFA', backgroundColor: '#000080' }}>
-				<Link to={onJob === true ? '/jobs' : '/favorite'}>
-					<Button
-						id={'backToButton'}
-						style={{
-							color: 'white',
-							backgroundColor: '#2F4F4F',
-							marginTop: '15px',
-							float: 'right',
-						}}
-					>
-						{onJob === true ? 'Back to Jobs' : 'Back to favorites'}
-					</Button>
-				</Link>
+				{/* <Link to={history.go(-1)}> */}
+				{/* <Link to={onJob === true ? '/jobs' : '/favorite'}> */}
+				<Button
+					onClick={() => history.go(-1)}
+					id={'backToButton'}
+					style={{
+						color: 'white',
+						backgroundColor: '#2F4F4F',
+						marginTop: '15px',
+						float: 'right',
+					}}
+				>
+					Back
+				</Button>
+				{/* </Link> */}
 				<h1 id={'headerTitle'} style={{ color: '#F5FFFA' }}>
 					{detail.title}
 				</h1>
@@ -137,7 +136,7 @@ export const Detail = () => {
 				/>
 			</Content>
 			<Footer id={'detailFooter'}>
-				Added at : {detail.created_at} {onJob === true}
+				Added at : {detail.created_at}
 				<Button
 					id={'addToFavoriteButton'}
 					style={{
@@ -146,12 +145,11 @@ export const Detail = () => {
 						marginRight: '140px',
 						float: 'right',
 						display: `${
-							// onJob === true && successDisplay === false ? 'block' : 'none'
 							existInFavorite === false && successDisplay === false ? 'block' : 'none'
 						}`,
 					}}
 					onClick={() => {
-						aLertTimeoutForAddSuccess();
+						alertTimeoutForAddSuccess();
 						setSuccessDisplay(true);
 						AddJobToFavoriteList();
 						setExistInFavorite(true);
@@ -166,11 +164,11 @@ export const Detail = () => {
 						backgroundColor: '#2F4F4F',
 						marginRight: '140px',
 						float: 'right',
-						// display: `${onJob === true ? 'none' : 'block'}`,
+
 						display: `${existInFavorite === true ? 'block' : 'none'}`,
 					}}
 					onClick={() => {
-						aLertTimeoutForDeleteSuccess();
+						alertTimeoutForDeleteSuccess();
 						setSuccessDeleteDisplay(true);
 						DeleteJobFromFavoriteList();
 						setExistInFavorite(false);

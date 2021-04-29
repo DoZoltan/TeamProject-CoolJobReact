@@ -1,43 +1,39 @@
 import React, { useContext, useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import { Menu, Input, AutoComplete } from 'antd';
+import { Menu, Input, AutoComplete, Button } from 'antd';
 import styled from 'styled-components';
-import { FilteredJobContext } from '../../Contexts/FilteredJobsContext';
-import { JobContext } from '../../Contexts/JobContext';
-import { GetApiData } from '../../hook/GetApiData';
-import { GetDataFromFavorites } from '../../hook/GetDataFromFavorites';
+import { TheContext } from '../../Contexts/TheContext';
+import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
+import useAxiosGet from '../../axios/useAxiosGet';
 
 const StyledMenu = styled(Menu)`
-	width: 200px;
+	width: 215px;
 `;
 
-const Div = styled.div`
-	padding: 10px;
+const MenuItem = styled(Menu.Item)`
+	height: 50px !important;
 `;
 export const FilterBar = () => {
 	const [inputTypeValue, setInputTypeValue] = useState('');
 	const [inputPositionValue, setInputPositionValue] = useState('');
 	const [inputLocationValue, setInputLocationValue] = useState('');
 	const [inputCompanyValue, setInputCompanyValue] = useState('');
-	const { jobs } = useContext(JobContext);
-	const { setFilteredJobs } = useContext(FilteredJobContext);
+	const { axiosData, setFilteredJobs, AxiosGet } = useContext(TheContext);
+
+	AxiosGet('https://localhost:44318/api/Jobs');
 
 	useEffect(() => {
-		setFilteredJobs(jobs);
-	}, [setFilteredJobs, jobs]);
+		setFilteredJobs(axiosData);
+	}, [setFilteredJobs, axiosData]);
 
 	const typeFilter = document.getElementById('typeFilter');
 	const locationFilter = document.getElementById('locationFilter');
 	const companyFilter = document.getElementById('companyFilter');
 	const positionFilter = document.getElementById('positionFilter');
-	const [fetchCompany] = GetApiData('https://localhost:44318/api/Filter/Company');
-	const uniqueCompanies = fetchCompany;
-	const [fetchType] = GetApiData('https://localhost:44318/api/Filter/Type');
-	const uniqueTypes = fetchType;
-	const [fetchTitle] = GetApiData('https://localhost:44318/api/Filter/Title');
-	const uniquePositions = fetchTitle;
-	const [fetchLocation] = GetApiData('https://localhost:44318/api/Filter/Location');
-	const uniqueLocations = fetchLocation;
+	const { data: uniqueCompanies } = useAxiosGet('https://localhost:44318/api/Filter/Company');
+	const { data: uniqueTypes } = useAxiosGet('https://localhost:44318/api/Filter/Type');
+	const { data: uniquePositions } = useAxiosGet('https://localhost:44318/api/Filter/Title');
+	const { data: uniqueLocations } = useAxiosGet('https://localhost:44318/api/Filter/Location');
 
 	const optionsPositions = [];
 	const optionsType = [];
@@ -92,7 +88,7 @@ export const FilterBar = () => {
 		setInputTypeValue(e);
 		inputFiltersToEmpty(typeFilter.id);
 		if (e.length > 0) {
-			const theTrueFilteredJobs = await GetDataFromFavorites(
+			const theTrueFilteredJobs = await UseSimpleGetAxios(
 				`https://localhost:44318/api/Filter/Type/${e}/1`
 			);
 			setFilteredJobs(theTrueFilteredJobs.data);
@@ -107,7 +103,7 @@ export const FilterBar = () => {
 		inputFiltersToEmpty(locationFilter.id);
 
 		if (e.length > 0) {
-			const theTrueFilteredJobs = await GetDataFromFavorites(
+			const theTrueFilteredJobs = await UseSimpleGetAxios(
 				`https://localhost:44318/api/Filter/Location/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
@@ -121,7 +117,7 @@ export const FilterBar = () => {
 		inputFiltersToEmpty(companyFilter.id);
 
 		if (e.length > 0) {
-			const theTrueFilteredJobs = await GetDataFromFavorites(
+			const theTrueFilteredJobs = await UseSimpleGetAxios(
 				`https://localhost:44318/api/Filter/Company/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
@@ -134,7 +130,7 @@ export const FilterBar = () => {
 		setInputPositionValue(e);
 		inputFiltersToEmpty(positionFilter.id);
 		if (e.length > 0) {
-			const theTrueFilteredJobs = await GetDataFromFavorites(
+			const theTrueFilteredJobs = await UseSimpleGetAxios(
 				`https://localhost:44318/api/Filter/Title/${e}/1`
 			); // 1 --> page number (have to be dynamic)
 			setFilteredJobs(theTrueFilteredJobs.data);
@@ -144,7 +140,8 @@ export const FilterBar = () => {
 	};
 
 	function resetFilters() {
-		setFilteredJobs(jobs);
+		setFilteredJobs(axiosData);
+
 		setInputPositionValue('');
 		setInputTypeValue('');
 		setInputCompanyValue('');
@@ -153,7 +150,7 @@ export const FilterBar = () => {
 
 	return (
 		<StyledMenu>
-			<Div>
+			<MenuItem key='1'>
 				<AutoComplete
 					value={inputTypeValue}
 					id={'typeFilter'}
@@ -170,8 +167,8 @@ export const FilterBar = () => {
 				>
 					<Input.Search size='large' placeholder='Type' />
 				</AutoComplete>
-			</Div>
-			<Div>
+			</MenuItem>
+			<MenuItem key='2'>
 				<AutoComplete
 					value={inputLocationValue}
 					id={'locationFilter'}
@@ -188,8 +185,8 @@ export const FilterBar = () => {
 				>
 					<Input.Search id={'locationInput'} size='large' placeholder='Location' />
 				</AutoComplete>
-			</Div>
-			<Div>
+			</MenuItem>
+			<MenuItem key='3'>
 				<AutoComplete
 					value={inputCompanyValue}
 					id={'companyFilter'}
@@ -206,8 +203,8 @@ export const FilterBar = () => {
 				>
 					<Input.Search size='large' placeholder='Company' />
 				</AutoComplete>
-			</Div>
-			<Div>
+			</MenuItem>
+			<MenuItem key='4'>
 				<AutoComplete
 					value={inputPositionValue}
 					id={'positionFilter'}
@@ -224,20 +221,13 @@ export const FilterBar = () => {
 				>
 					<Input.Search size='large' placeholder='Position' />
 				</AutoComplete>
-			</Div>
-			<div>
-				<button
-					id={'resetFilterButton'}
-					style={{
-						width: 100,
-						height: 25,
-						marginLeft: 10,
-					}}
-					onClick={resetFilters}
-				>
+			</MenuItem>
+
+			<MenuItem key='5'>
+				<Button id={'resetFilterButton'} onClick={resetFilters}>
 					Reset Filters
-				</button>
-			</div>
+				</Button>
+			</MenuItem>
 		</StyledMenu>
 	);
 };

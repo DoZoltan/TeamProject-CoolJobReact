@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import FavoriteList from './FavoriteList';
 import styled from 'styled-components';
 import { BackTop } from 'antd';
-import { FavoriteJobContext } from '../../Contexts/FavoriteJobContext';
+import { TheContext } from '../../Contexts/TheContext';
 
 const StyledDiv = styled.div`
 	width: 100%;
@@ -18,8 +18,9 @@ const MainDiv = styled.div`
 `;
 
 export const FavoriteBox = () => {
-	const { ReloadFavoriteJobs } = useContext(FavoriteJobContext);
-	ReloadFavoriteJobs();
+	const { AxiosGet, user } = useContext(TheContext);
+
+	AxiosGet(`https://localhost:44318/api/Favorites/${user}`);
 
 	return (
 		<MainDiv>

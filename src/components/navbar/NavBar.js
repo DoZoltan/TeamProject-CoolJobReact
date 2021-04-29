@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { OnJobContext } from '../../Contexts/OnJobContext';
 
 const StickyHeader = styled.header`
 	position: fixed;
@@ -15,11 +14,9 @@ const StickyHeader = styled.header`
 
 export const NavBar = () => {
 	const { Header } = Layout;
-	const { setOnJob } = useContext(OnJobContext);
-
 	return (
-		<Header className='header'>
-			<StickyHeader>
+		<Header key='header' className='header'>
+			<StickyHeader key='sticky-header'>
 				<Menu theme='dark' mode='horizontal'>
 					<Menu.Item key='1'>
 						<Link id={'linkToMain'} to='/main'>
@@ -27,12 +24,12 @@ export const NavBar = () => {
 						</Link>
 					</Menu.Item>
 					<Menu.Item key='2'>
-						<Link id={'linkToJobs'} to='/jobs' onClick={() => setOnJob(true)}>
+						<Link id={'linkToJobs'} to='/jobs'>
 							Jobs
 						</Link>
 					</Menu.Item>
 					<Menu.Item key='3'>
-						<Link id={'linkToFavorites'} to='/favorite' onClick={() => setOnJob(false)}>
+						<Link id={'linkToFavorites'} to='/favorite'>
 							Favorites
 						</Link>
 					</Menu.Item>
@@ -52,19 +49,18 @@ export const NavBar = () => {
 						</Link>
 					</Menu.Item>
 
-					<Button
+					<Menu.Item
+						key='7'
 						id={'reloadButton'}
 						style={{
 							color: 'white',
 							backgroundColor: '#2F4F4F',
-							marginTop: '15px',
-							marginRight: '15px',
 							float: 'right',
 						}}
 						onClick={() => window.location.reload(false)}
 					>
 						Click to reload!
-					</Button>
+					</Menu.Item>
 				</Menu>
 			</StickyHeader>
 		</Header>
