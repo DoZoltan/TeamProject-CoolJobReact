@@ -17,16 +17,26 @@ const MainDiv = styled.div`
 	background-color: black;
 `;
 
-export const FavoriteBox = () => {
-	const { AxiosGet, user } = useContext(TheContext);
+// The styled div will be replaced to a component
+const LoadingAndError = styled.div`
+	font-size: 200px;
+	margin: auto;
+`;
 
+export const FavoriteBox = () => {
+	const { AxiosGet, user, axiosData, axiosIsLoading, axiosError } = useContext(TheContext);
+
+	// The user is a simple number now
+	// After the user will be an object then we have to get the ID property of it
 	AxiosGet(`https://localhost:44318/api/Favorites/${user}`);
 
 	return (
 		<MainDiv>
 			<StyledDiv>
 				<FavoriteDiv>
-					<FavoriteList />
+					{axiosError && <LoadingAndError>{axiosError}</LoadingAndError>}
+					{axiosIsLoading && <LoadingAndError>Loading...</LoadingAndError>}
+					{!axiosIsLoading && axiosData && <FavoriteList />}
 				</FavoriteDiv>
 			</StyledDiv>
 			<BackTop />
