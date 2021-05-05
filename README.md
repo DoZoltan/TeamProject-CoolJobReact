@@ -27,3 +27,6 @@
 4. Write -> npm install -> press enter wait until done.
 5. Write -> npm start -> automatically open on web. If not then press ctrl + click on link. 
 6. Open and start the backend API project (you can find the steps of it at its repo)
+
+
+## Project kanban board - > https://github.com/DoZoltan/TeamProject-CoolJobReact/projects/1
