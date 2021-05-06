@@ -30,6 +30,7 @@ export const JobCard = (props) => {
 			sm={{ span: 12 }}
 			md={{ span: 8 }}
 			lg={{ span: 6 }}
+			xl={window.location.pathname === '/jobs' ? { span: 6 } : { span: 4 }}
 		>
 			<Link onClick={() => setDetail(props)} to={'/detail/' + props.id}>
 				<Card
