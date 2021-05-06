@@ -3,11 +3,6 @@ import React from 'react';
 import JobsList from './JobsList';
 import styled from 'styled-components';
 
-const StyledDiv = styled.div`
-	width: 85%;
-	float: right;
-`;
-
 const JobsDiv = styled.div`
 	padding: 15px;
 	background: #ececec;
