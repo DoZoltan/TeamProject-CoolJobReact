@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Menu, Drawer, Button } from 'antd';
+import { Layout, Menu, Drawer } from 'antd';
 
 import styled from 'styled-components';
 import FilterBar from '../filterbar/FilterBar';
