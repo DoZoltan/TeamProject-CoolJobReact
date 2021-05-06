@@ -2,21 +2,16 @@ import React, { useContext } from 'react';
 import JobCard from './JobCard';
 import { Row, BackTop } from 'antd';
 import { TheContext } from '../../Contexts/TheContext';
-import styled from 'styled-components';
-
-// The styled div will be replaced to a component
-const LoadingAndError = styled.div`
-	font-size: 200px;
-	margin: auto;
-`;
+import Load from '../loadAndError/Load';
+import Error from '../loadAndError/Error';
 
 const JobsList = () => {
 	const { filteredJobs, axiosIsLoading, axiosError } = useContext(TheContext);
 
 	return (
 		<div>
-			{axiosError && <LoadingAndError>{axiosError}</LoadingAndError>}
-			{axiosIsLoading && <LoadingAndError>Loading...</LoadingAndError>}
+			{axiosError && <Error />}
+			{axiosIsLoading && <Load />}
 			{/*filteredJobs will be null by default, so the length property will be invalid*/}
 			{!axiosIsLoading && filteredJobs && (
 				<Row gutter={16}>

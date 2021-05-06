@@ -3,11 +3,14 @@ import FavoriteList from './FavoriteList';
 import styled from 'styled-components';
 import { BackTop } from 'antd';
 import { TheContext } from '../../Contexts/TheContext';
+import Load from '../loadAndError/Load';
+import Error from '../loadAndError/Error';
 
 const StyledDiv = styled.div`
 	width: 100%;
 	float: right;
 `;
+
 const FavoriteDiv = styled.div`
 	padding: 15px;
 	background: #ececec;
@@ -15,12 +18,6 @@ const FavoriteDiv = styled.div`
 
 const MainDiv = styled.div`
 	background-color: black;
-`;
-
-// The styled div will be replaced to a component
-const LoadingAndError = styled.div`
-	font-size: 200px;
-	margin: auto;
 `;
 
 const FavoriteBox = () => {
@@ -34,8 +31,8 @@ const FavoriteBox = () => {
 		<MainDiv>
 			<StyledDiv>
 				<FavoriteDiv>
-					{axiosError && <LoadingAndError>{axiosError}</LoadingAndError>}
-					{axiosIsLoading && <LoadingAndError>Loading...</LoadingAndError>}
+					{axiosError && <Error />}
+					{axiosIsLoading && <Load />}
 					{!axiosIsLoading && axiosData && <FavoriteList />}
 				</FavoriteDiv>
 			</StyledDiv>
