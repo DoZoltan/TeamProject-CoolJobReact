@@ -17,7 +17,8 @@ const Div = styled.div`
 	position: fixed;
 	float: left;
 `;
-export const JobsBox = () => {
+
+const JobsBox = () => {
 	return (
 		<React.Fragment>
 			<Div>

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Detail from './Detail';
 import FilterBar from '../filterbar/FilterBar';
 import { BackTop } from 'antd';
+import { TheContext } from '../../Contexts/TheContext';
+import Load from '../loadAndError/Load';
+import Error from '../loadAndError/Error';
 
 const DetailDiv = styled.div`
 	background-color: black;
@@ -17,7 +20,10 @@ const Div = styled.div`
 	position: fixed;
 	float: left;
 `;
-export const DetailBox = () => {
+
+const DetailBox = () => {
+	const { detail, axiosIsLoading, axiosError } = useContext(TheContext);
+
 	return (
 		<React.Fragment>
 			<Div>
@@ -25,7 +31,10 @@ export const DetailBox = () => {
 			</Div>
 			<StyledDiv>
 				<DetailDiv>
-					<Detail />
+					{axiosError && <Error />}
+					{axiosIsLoading && <Load />}
+					{/*detail will be null by default, so the length property will be invalid*/}
+					{!axiosIsLoading && detail && <Detail />}
 				</DetailDiv>
 			</StyledDiv>
 			<BackTop />

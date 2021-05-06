@@ -13,7 +13,8 @@ const StyledImage = styled.img`
 	margin-left: auto;
 	margin-right: auto;
 `;
-export const JobCard = (props) => {
+
+const JobCard = (props) => {
 	const { setDetail } = useContext(TheContext);
 	const { Meta } = Card;
 

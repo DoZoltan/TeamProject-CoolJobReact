@@ -18,7 +18,7 @@ const LogoDiv = styled.div`
 // 	font-size: 3.5vw;
 // `;
 
-export const Main = () => {
+const Main = () => {
 	return (
 		<div>
 			<LogoDiv>{/* <P id={'welcomeText'}>Welcome to the Cool Job website! </P> */}</LogoDiv>
