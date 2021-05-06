@@ -16,18 +16,19 @@ const JobsDiv = styled.div`
 const Div = styled.div`
 	position: fixed;
 	float: left;
+	background: #ececec;
 `;
 export const JobsBox = () => {
 	return (
 		<React.Fragment>
-			<Div>
+			<Div className='filterDiv'>
 				<FilterBar />
 			</Div>
-			<StyledDiv>
+			<div className='jobsDiv'>
 				<JobsDiv>
 					<JobsList />
 				</JobsDiv>
-			</StyledDiv>
+			</div>
 		</React.Fragment>
 	);
 };
