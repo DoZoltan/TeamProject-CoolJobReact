@@ -21,20 +21,22 @@ export const Detail = () => {
 	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	const [existInFavorite, setExistInFavorite] = useState(false);
 
+	const JobExistInFavorite = async () => {
+		let fetchData = await UseSimpleGetAxios(
+			`https://localhost:44318/api/Favorites/${detail.id}/2`
+		); // 0 --> the id of the user
+		var count = Object.keys(fetchData.data).length;
+		if (count > 0) {
+			setExistInFavorite(true);
+		} else {
+			setExistInFavorite(false);
+		}
+		console.log('exi');
+	};
+
 	useEffect(() => {
-		const JobExistInFavorite = async () => {
-			let fetchData = await UseSimpleGetAxios(
-				`https://localhost:44318/api/Favorites/${detail.id}/2`
-			); // 0 --> the id of the user
-			var count = Object.keys(fetchData.data).length;
-			if (count > 0) {
-				setExistInFavorite(true);
-			} else {
-				setExistInFavorite(false);
-			}
-		};
 		JobExistInFavorite();
-	}, [detail.id]);
+	}, []);
 
 	const AddJobToFavoriteList = () => {
 		UseAxiosPostForJob(detail, 'https://localhost:44318/api/Favorites');
