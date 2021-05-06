@@ -10,7 +10,7 @@ const LoadingAndError = styled.div`
 	margin: auto;
 `;
 
-export const JobsList = () => {
+const JobsList = () => {
 	const { filteredJobs, axiosIsLoading, axiosError } = useContext(TheContext);
 
 	return (

@@ -14,7 +14,7 @@ const MenuItem = styled(Menu.Item)`
 	height: 50px !important;
 `;
 
-export const FilterBar = () => {
+const FilterBar = () => {
 	const [inputTypeValue, setInputTypeValue] = useState('');
 	const [inputPositionValue, setInputPositionValue] = useState('');
 	const [inputLocationValue, setInputLocationValue] = useState('');

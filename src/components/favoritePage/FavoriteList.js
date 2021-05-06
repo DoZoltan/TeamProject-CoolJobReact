@@ -3,7 +3,7 @@ import JobCard from '../jobsPage/JobCard';
 import { Row } from 'antd';
 import { TheContext } from '../../Contexts/TheContext';
 
-export const FavoriteList = () => {
+const FavoriteList = () => {
 	const { axiosData } = useContext(TheContext);
 
 	return (

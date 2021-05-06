@@ -24,7 +24,7 @@ const Textarea = styled.textarea`
 	height: 100px;
 `;
 
-export const Add = () => {
+const Add = () => {
 	var canSend = true;
 	const { Footer, Content } = Layout;
 

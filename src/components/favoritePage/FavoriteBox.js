@@ -23,7 +23,7 @@ const LoadingAndError = styled.div`
 	margin: auto;
 `;
 
-export const FavoriteBox = () => {
+const FavoriteBox = () => {
 	const { AxiosGet, user, axiosData, axiosIsLoading, axiosError } = useContext(TheContext);
 
 	// The user is a simple number now

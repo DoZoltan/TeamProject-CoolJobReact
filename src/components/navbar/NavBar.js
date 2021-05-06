@@ -12,7 +12,7 @@ const StickyHeader = styled.header`
 	z-index: 1;
 `;
 
-export const NavBar = () => {
+const NavBar = () => {
 	const { Header } = Layout;
 	return (
 		<Header key='header' className='header'>

@@ -18,7 +18,7 @@ const Input = styled.input`
 	font-size: 14px;
 `;
 
-export const LoginPage = () => {
+const LoginPage = () => {
 	var canSend = true;
 	var history = useHistory();
 	const { Footer, Content } = Layout;

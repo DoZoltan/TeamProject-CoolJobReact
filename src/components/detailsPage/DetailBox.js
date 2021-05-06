@@ -25,7 +25,7 @@ const LoadingAndError = styled.div`
 	margin: auto;
 `;
 
-export const DetailBox = () => {
+const DetailBox = () => {
 	const { detail, axiosIsLoading, axiosError } = useContext(TheContext);
 
 	return (

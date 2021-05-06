@@ -14,7 +14,8 @@ const StyleImage = {
 	marginTop: '8px',
 	width: '500px',
 };
-export const Detail = () => {
+
+const Detail = () => {
 	const { Header, Footer, Content } = Layout;
 	const { detail } = useContext(TheContext);
 	const [successDisplay, setSuccessDisplay] = useState(false);
@@ -31,7 +32,6 @@ export const Detail = () => {
 		} else {
 			setExistInFavorite(false);
 		}
-		console.log('exi');
 	};
 
 	useEffect(() => {
