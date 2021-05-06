@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { TheContext } from '../../Contexts/TheContext';
 import 'antd/dist/antd.css';
 import { Layout, Image, Button, Alert } from 'antd';
 import UseAxiosPostForJob from '../../axios/useAxiosPostForJob';
 import useAxiosDelete from '../../axios/useAxiosDelete';
 import { useHistory } from 'react-router-dom';
 import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
+import { UserContext } from '../../Contexts/UserContext';
 
 const StyleImage = {
 	display: 'block',
@@ -15,39 +15,42 @@ const StyleImage = {
 	width: '500px',
 };
 
-const Detail = () => {
+const Detail = (props) => {
 	const { Header, Footer, Content } = Layout;
-	const { detail } = useContext(TheContext);
 	const [successDisplay, setSuccessDisplay] = useState(false);
 	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	const [existInFavorite, setExistInFavorite] = useState(false);
+	const { user } = useContext(UserContext);
 
-	const JobExistInFavorite = async () => {
-		let fetchData = await UseSimpleGetAxios(
-			`https://localhost:44318/api/Favorites/${detail.id}/2`
-		); // 0 --> the id of the user
-		var count = Object.keys(fetchData.data).length;
-		if (count > 0) {
-			setExistInFavorite(true);
-		} else {
-			setExistInFavorite(false);
-		}
-	};
+	console.log('Detail');
 
 	useEffect(() => {
+		// The user is a simple number now
+		// After the user will be an object then we have to get the ID property of it
+		const JobExistInFavorite = async () => {
+			let fetchData = await UseSimpleGetAxios(
+				`https://localhost:44318/api/Favorites/${props.details.id}/${user}`
+			);
+			var count = Object.keys(fetchData.data).length;
+			if (count > 0) {
+				setExistInFavorite(true);
+			} else {
+				setExistInFavorite(false);
+			}
+		};
 		JobExistInFavorite();
-	}, []);
+	}, [props.details.id, user]);
 
 	const AddJobToFavoriteList = () => {
-		UseAxiosPostForJob(detail, 'https://localhost:44318/api/Favorites');
+		UseAxiosPostForJob(props.details, 'https://localhost:44318/api/Favorites');
 	};
 
 	const history = useHistory();
 
 	const DeleteJobFromFavoriteList = async () => {
-		await useAxiosDelete(`https://localhost:44318/api/Favorites/${detail.id}/2`);
-		// history.go(-1);
-		// 0 --> the id of the user
+		// The user is a simple number now
+		// After the user will be an object then we have to get the ID property of it
+		await useAxiosDelete(`https://localhost:44318/api/Favorites/${props.details.id}/${user}`);
 	};
 
 	const alertTimeoutForAddSuccess = () => {
@@ -101,26 +104,27 @@ const Detail = () => {
 				</Button>
 				{/* </Link> */}
 				<h1 id={'headerTitle'} style={{ color: '#F5FFFA' }}>
-					{detail.title}
+					{props.details.title}
 				</h1>
 			</Header>
 			<Content id={'content'}>
 				<div style={{ paddingRight: '400px', paddingLeft: '400px' }}>
-					<Image id={'imgLogo'} style={StyleImage} src={detail.company_logo} />
+					<Image id={'imgLogo'} style={StyleImage} src={props.details.company_logo} />
 				</div>
 				<div id={'textBox'} style={{ margin: '20px' }}>
-					<h2 id={'companyName'}>Company name: {detail.company}</h2>
-					<h3 id={'jobType'}>Job title: {detail.type}</h3>
-					<h3 id={'jobLocation'}>Job location: {detail.location}</h3>
+					<h2 id={'companyName'}>Company name: {props.details.company}</h2>
+					<h3 id={'jobType'}>Job title: {props.details.type}</h3>
+					<h3 id={'jobLocation'}>Job location: {props.details.location}</h3>
 					<h4 id={'companyPage'}>
-						company page: <a href={detail.company_url}>{detail.company_url}</a>
+						company page:{' '}
+						<a href={props.details.company_url}>{props.details.company_url}</a>
 					</h4>
 					<p
 						id={'descriptionParagraph'}
-						dangerouslySetInnerHTML={{ __html: detail.apply }}
+						dangerouslySetInnerHTML={{ __html: props.details.apply }}
 					/>
 					<h4 id={'jobDescription'}>descritpiton:</h4>
-					<p dangerouslySetInnerHTML={{ __html: detail.description }} />
+					<p dangerouslySetInnerHTML={{ __html: props.details.description }} />
 				</div>
 				<Alert
 					id={'successAlert'}
@@ -138,7 +142,7 @@ const Detail = () => {
 				/>
 			</Content>
 			<Footer id={'detailFooter'}>
-				Added at : {detail.created_at}
+				Added at : {props.details.created_at}
 				<Button
 					id={'addToFavoriteButton'}
 					style={{
