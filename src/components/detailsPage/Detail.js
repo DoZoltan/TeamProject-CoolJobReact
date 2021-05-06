@@ -7,13 +7,6 @@ import useAxiosDelete from '../../axios/useAxiosDelete';
 import { useHistory } from 'react-router-dom';
 import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
 
-const StyleImage = {
-	display: 'block',
-	marginLeft: 'auto',
-	marginRight: 'auto',
-	marginTop: '8px',
-	width: '500px',
-};
 export const Detail = () => {
 	const { Header, Footer, Content } = Layout;
 	const { detail } = useContext(TheContext);
@@ -104,7 +97,7 @@ export const Detail = () => {
 			</Header>
 			<Content id={'content'}>
 				<div style={{ paddingRight: '400px', paddingLeft: '400px' }}>
-					<Image id={'imgLogo'} style={StyleImage} src={detail.company_logo} />
+					<Image id={'imgLogo'} src={detail.company_logo} />
 				</div>
 				<div id={'textBox'} style={{ margin: '20px' }}>
 					<h2 id={'companyName'}>Company name: {detail.company}</h2>
