@@ -8,11 +8,6 @@ const DetailDiv = styled.div`
 	background-color: black;
 `;
 
-const StyledDiv = styled.div`
-	width: 85%;
-	float: right;
-`;
-
 const Div = styled.div`
 	position: fixed;
 	float: left;
@@ -23,11 +18,11 @@ export const DetailBox = () => {
 			<Div>
 				<FilterBar />
 			</Div>
-			<StyledDiv>
+			<div className='jobsDiv'>
 				<DetailDiv>
 					<Detail />
 				</DetailDiv>
-			</StyledDiv>
+			</div>
 			<BackTop />
 		</React.Fragment>
 	);
