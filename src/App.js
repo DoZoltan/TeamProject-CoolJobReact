@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { TheProvider } from './Contexts/TheContext';
 import { UserProvider } from './Contexts/UserContext';
+import { FilterProvider } from './Contexts/FilterContext';
 
 import NavBar from './components/navbar/NavBar';
 import Main from './components/mainPage/Main';
@@ -26,7 +27,9 @@ const App = () => {
 								<Redirect to='/main' />
 							</Route>
 							<Route path='/main' component={Main} />
-							<Route path='/jobs' component={JobsBox} />
+							<FilterProvider>
+								<Route path='/jobs' component={JobsBox} />
+							</FilterProvider>
 							<Route path='/favorite' component={FavoriteBox} />
 							<Route path='/add' component={Add} />
 							<Route path='/detail' component={DetailBox} />
