@@ -18,8 +18,6 @@ export const TheProvider = (props) => {
 		setAxiosError(error);
 	};
 
-	console.log('Context');
-
 	return (
 		<TheContext.Provider
 			value={{
