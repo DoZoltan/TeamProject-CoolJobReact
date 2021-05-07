@@ -22,8 +22,6 @@ const Detail = (props) => {
 	const [existInFavorite, setExistInFavorite] = useState(false);
 	const { user } = useContext(UserContext);
 
-	console.log('Detail');
-
 	useEffect(() => {
 		// The user is a simple number now
 		// After the user will be an object then we have to get the ID property of it
