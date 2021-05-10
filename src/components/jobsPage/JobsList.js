@@ -13,7 +13,7 @@ const JobsList = () => {
 			{axiosError && <Error />}
 			{axiosIsLoading && <Load />}
 			{!axiosIsLoading && filteredJobs && (
-				<Row gutter={16}>
+				<Row gutter={[16, 16]}>
 					{filteredJobs.map((job) => (
 						<JobCard
 							key={job.id}

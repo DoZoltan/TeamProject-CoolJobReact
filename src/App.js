@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { TheProvider } from './Contexts/TheContext';
 import { UserProvider } from './Contexts/UserContext';
 import { FilterProvider } from './Contexts/FilterContext';
+import './App.css';
+import 'antd/dist/antd.css';
 
 import NavBar from './components/navbar/NavBar';
 import Main from './components/mainPage/Main';

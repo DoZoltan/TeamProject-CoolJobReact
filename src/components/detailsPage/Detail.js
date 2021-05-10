@@ -7,13 +7,6 @@ import { useHistory } from 'react-router-dom';
 import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
 import { UserContext } from '../../Contexts/UserContext';
 
-const StyleImage = {
-	display: 'block',
-	marginLeft: 'auto',
-	marginRight: 'auto',
-	marginTop: '8px',
-	width: '500px',
-};
 
 const Detail = (props) => {
 	const { Header, Footer, Content } = Layout;
@@ -107,7 +100,7 @@ const Detail = (props) => {
 			</Header>
 			<Content id={'content'}>
 				<div style={{ paddingRight: '400px', paddingLeft: '400px' }}>
-					<Image id={'imgLogo'} style={StyleImage} src={props.details.company_logo} />
+					<Image id={'imgLogo'} src={detail.company_logo} />
 				</div>
 				<div id={'textBox'} style={{ margin: '20px' }}>
 					<h2 id={'companyName'}>Company name: {props.details.company}</h2>
