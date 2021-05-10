@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu, Drawer } from 'antd';
 
 import styled from 'styled-components';
@@ -15,6 +15,7 @@ const StickyHeader = styled.header`
 
 const NavBar = () => {
 	const { Header } = Layout;
+	const location = useLocation();
 	const [visible, setVisible] = useState(false);
 	const [visible2, setVisible2] = useState(false);
 	const showDrawer = () => {
@@ -159,9 +160,11 @@ const NavBar = () => {
 								<i className='fas fa-bolt'></i>
 							</Link>
 						</Menu.Item>
-						<Menu.Item key='2' id={'filterBarButton'} onClick={showSecondDrawer}>
-							<i className='fas fa-search'></i>
-						</Menu.Item>
+						{location.pathname === '/jobs' && (
+							<Menu.Item key='2' id={'filterBarButton'} onClick={showSecondDrawer}>
+								<i className='fas fa-search'></i>
+							</Menu.Item>
+						)}
 						<Menu.Item key='3'>
 							<Link id={'linkToMain'} to='/main'>
 								Main
