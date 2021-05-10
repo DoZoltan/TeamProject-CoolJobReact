@@ -9,7 +9,6 @@ export const TheProvider = (props) => {
 	const [axiosError, setAxiosError] = useState(null);
 	const [filteredJobs, setFilteredJobs] = useState(null);
 	const [detail, setDetail] = useState(null);
-	const [onJob, setOnJob] = useState(true);
 
 	const AxiosGet = async (url) => {
 		const { data, isLoading, error } = await useAxiosGet(url);
@@ -23,11 +22,9 @@ export const TheProvider = (props) => {
 			value={{
 				axiosIsLoading,
 				axiosError,
-				onJob,
 				axiosData,
 				filteredJobs,
 				detail,
-				setOnJob,
 				setDetail,
 				setFilteredJobs,
 				AxiosGet,
