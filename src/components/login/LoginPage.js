@@ -4,7 +4,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ForgotPassword from './ForgotPassword';
 
-export const LoginPage = () => {
+const LoginPage = () => {
 	// let resultSample = {
 	// 	userName: '',
 	// 	password: '',

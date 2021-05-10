@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Menu, Input, AutoComplete, Button } from 'antd';
 import styled from 'styled-components';
 import { TheContext } from '../../Contexts/TheContext';
 import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
-import useAxiosGet from '../../axios/useAxiosGet';
 
 const StyledMenu = styled(Menu)`
 	width: 215px;
@@ -13,12 +12,13 @@ const StyledMenu = styled(Menu)`
 const MenuItem = styled(Menu.Item)`
 	height: 50px !important;
 `;
-export const FilterBar = () => {
+
+const FilterBar = (props) => {
 	const [inputTypeValue, setInputTypeValue] = useState('');
 	const [inputPositionValue, setInputPositionValue] = useState('');
 	const [inputLocationValue, setInputLocationValue] = useState('');
 	const [inputCompanyValue, setInputCompanyValue] = useState('');
-	const { axiosData, setFilteredJobs, AxiosGet } = useContext(TheContext);
+	const { AxiosGet, axiosData, setFilteredJobs } = useContext(TheContext);
 
 	AxiosGet('https://localhost:44318/api/Jobs');
 
@@ -30,39 +30,6 @@ export const FilterBar = () => {
 	const locationFilter = document.getElementById('locationFilter');
 	const companyFilter = document.getElementById('companyFilter');
 	const positionFilter = document.getElementById('positionFilter');
-	const { data: uniqueCompanies } = useAxiosGet('https://localhost:44318/api/Filter/Company');
-	const { data: uniqueTypes } = useAxiosGet('https://localhost:44318/api/Filter/Type');
-	const { data: uniquePositions } = useAxiosGet('https://localhost:44318/api/Filter/Title');
-	const { data: uniqueLocations } = useAxiosGet('https://localhost:44318/api/Filter/Location');
-
-	const optionsPositions = [];
-	const optionsType = [];
-	const optionsCompany = [];
-	const optionsLocation = [];
-
-	uniquePositions.map((position) =>
-		optionsPositions.push({
-			value: position,
-		})
-	);
-
-	uniqueTypes.map((type) =>
-		optionsType.push({
-			value: type,
-		})
-	);
-
-	uniqueCompanies.map((company) =>
-		optionsCompany.push({
-			value: company,
-		})
-	);
-
-	uniqueLocations.map((location) =>
-		optionsLocation.push({
-			value: location,
-		})
-	);
 
 	const inputFiltersToEmpty = (usingFilter) => {
 		if (usingFilter === typeFilter.id) {
@@ -149,94 +116,86 @@ export const FilterBar = () => {
 	}
 
 	return (
-		<div className='filter-context'>
-			<div className='mobileFilterHidden'>
-				<StyledMenu>
-					<MenuItem key='1'>
-						<AutoComplete
-							value={inputTypeValue}
-							id={'typeFilter'}
-							dropdownClassName='certain-category-search-dropdown'
-							dropdownMatchSelectWidth={300}
-							style={{
-								width: 180,
-							}}
-							options={optionsType}
-							filterOption={(inputValue, option) =>
-								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-							}
-							onChange={changeCardListByType}
-						>
-							<Input.Search size='large' placeholder='Type' />
-						</AutoComplete>
-					</MenuItem>
-					<MenuItem key='2'>
-						<AutoComplete
-							value={inputLocationValue}
-							id={'locationFilter'}
-							dropdownClassName='certain-category-search-dropdown'
-							dropdownMatchSelectWidth={300}
-							style={{
-								width: 180,
-							}}
-							options={optionsLocation}
-							filterOption={(inputValue, option) =>
-								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-							}
-							onChange={changeCardListByLocation}
-						>
-							<Input.Search
-								id={'locationInput'}
-								size='large'
-								placeholder='Location'
-							/>
-						</AutoComplete>
-					</MenuItem>
-					<MenuItem key='3'>
-						<AutoComplete
-							value={inputCompanyValue}
-							id={'companyFilter'}
-							dropdownClassName='certain-category-search-dropdown'
-							dropdownMatchSelectWidth={300}
-							style={{
-								width: 180,
-							}}
-							options={optionsCompany}
-							filterOption={(inputValue, option) =>
-								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-							}
-							onChange={changeCardListByCompany}
-						>
-							<Input.Search size='large' placeholder='Company' />
-						</AutoComplete>
-					</MenuItem>
-					<MenuItem key='4'>
-						<AutoComplete
-							value={inputPositionValue}
-							id={'positionFilter'}
-							dropdownClassName='certain-category-search-dropdown'
-							dropdownMatchSelectWidth={800}
-							style={{
-								width: 180,
-							}}
-							options={optionsPositions}
-							filterOption={(inputValue, option) =>
-								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-							}
-							onChange={changeCardListByPositions}
-						>
-							<Input.Search size='large' placeholder='Position' />
-						</AutoComplete>
-					</MenuItem>
+		<StyledMenu>
+			<MenuItem key='1'>
+				<AutoComplete
+					value={inputTypeValue}
+					id={'typeFilter'}
+					dropdownClassName='certain-category-search-dropdown'
+					dropdownMatchSelectWidth={300}
+					style={{
+						width: 180,
+					}}
+					options={props.optionsType}
+					filterOption={(inputValue, option) =>
+						option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+					}
+					onChange={changeCardListByType}
+				>
+					<Input.Search size='large' placeholder='Type' />
+				</AutoComplete>
+			</MenuItem>
+			<MenuItem key='2'>
+				<AutoComplete
+					value={inputLocationValue}
+					id={'locationFilter'}
+					dropdownClassName='certain-category-search-dropdown'
+					dropdownMatchSelectWidth={300}
+					style={{
+						width: 180,
+					}}
+					options={props.optionsLocation}
+					filterOption={(inputValue, option) =>
+						option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+					}
+					onChange={changeCardListByLocation}
+				>
+					<Input.Search id={'locationInput'} size='large' placeholder='Location' />
+				</AutoComplete>
+			</MenuItem>
+			<MenuItem key='3'>
+				<AutoComplete
+					value={inputCompanyValue}
+					id={'companyFilter'}
+					dropdownClassName='certain-category-search-dropdown'
+					dropdownMatchSelectWidth={300}
+					style={{
+						width: 180,
+					}}
+					options={props.optionsCompany}
+					filterOption={(inputValue, option) =>
+						option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+					}
+					onChange={changeCardListByCompany}
+				>
+					<Input.Search size='large' placeholder='Company' />
+				</AutoComplete>
+			</MenuItem>
+			<MenuItem key='4'>
+				<AutoComplete
+					value={inputPositionValue}
+					id={'positionFilter'}
+					dropdownClassName='certain-category-search-dropdown'
+					dropdownMatchSelectWidth={800}
+					style={{
+						width: 180,
+					}}
+					options={props.optionsPositions}
+					filterOption={(inputValue, option) =>
+						option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+					}
+					onChange={changeCardListByPositions}
+				>
+					<Input.Search size='large' placeholder='Position' />
+				</AutoComplete>
+			</MenuItem>
 
-					<MenuItem key='5'>
-						<Button id={'resetFilterButton'} onClick={resetFilters}>
-							Reset Filters
-						</Button>
-					</MenuItem>
-				</StyledMenu>
-			</div>
-		</div>
+			<MenuItem key='5'>
+				<Button id={'resetFilterButton'} onClick={resetFilters}>
+					Reset Filters
+				</Button>
+			</MenuItem>
+		</StyledMenu>
 	);
 };
 

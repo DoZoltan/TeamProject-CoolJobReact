@@ -1,25 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
 import Detail from './Detail';
-import FilterBar from '../filterbar/FilterBar';
 import { BackTop } from 'antd';
+import { TheContext } from '../../Contexts/TheContext';
+import Load from '../loadAndError/Load';
+import Error from '../loadAndError/Error';
 
-const DetailDiv = styled.div`
-	background-color: black;
-`;
+const DetailBox = () => {
+	const { detail, axiosIsLoading, axiosError } = useContext(TheContext);
 
-const Div = styled.div`
-	position: fixed;
-	float: left;
-`;
-export const DetailBox = () => {
 	return (
 		<React.Fragment>
-			<div>
-				<DetailDiv>
-					<Detail />
-				</DetailDiv>
-			</div>
+			{axiosError && <Error />}
+			{axiosIsLoading && <Load />}
+			{!axiosIsLoading && detail && <Detail details={detail} />}
 			<BackTop />
 		</React.Fragment>
 	);

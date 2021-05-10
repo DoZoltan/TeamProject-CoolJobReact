@@ -13,7 +13,7 @@ const StickyHeader = styled.header`
 	z-index: 1;
 `;
 
-export const NavBar = () => {
+const NavBar = () => {
 	const { Header } = Layout;
 	const [visible, setVisible] = useState(false);
 	const [visible2, setVisible2] = useState(false);

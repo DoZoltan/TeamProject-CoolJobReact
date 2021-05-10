@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Main = () => {
+const Main = () => {
 	return (
 		<div className='main'>
 			<video src='/videos/p.mp4' autoPlay loop muted />
