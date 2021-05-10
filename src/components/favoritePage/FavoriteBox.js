@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import FavoriteList from './FavoriteList';
 import styled from 'styled-components';
 import { BackTop } from 'antd';
-import { TheContext } from '../../Contexts/TheContext';
+import { UserContext } from '../../Contexts/UserContext';
 import Load from '../loadAndError/Load';
 import Error from '../loadAndError/Error';
+import useAxiosGet from '../../axios/useAxiosGet';
 
 const StyledDiv = styled.div`
 	width: 100%;
@@ -21,19 +22,19 @@ const MainDiv = styled.div`
 `;
 
 const FavoriteBox = () => {
-	const { AxiosGet, user, axiosData, axiosIsLoading, axiosError } = useContext(TheContext);
+	const { user } = useContext(UserContext);
 
 	// The user is a simple number now
 	// After the user will be an object then we have to get the ID property of it
-	AxiosGet(`https://localhost:44318/api/Favorites/${user}`);
+	const { data, isLoading, error } = useAxiosGet(`https://localhost:44318/api/Favorites/${user}`);
 
 	return (
 		<MainDiv>
 			<StyledDiv>
 				<FavoriteDiv>
-					{axiosError && <Error />}
-					{axiosIsLoading && <Load />}
-					{!axiosIsLoading && axiosData && <FavoriteList />}
+					{error && <Error />}
+					{isLoading && <Load />}
+					{!isLoading && data && <FavoriteList favorites={data} />}
 				</FavoriteDiv>
 			</StyledDiv>
 			<BackTop />

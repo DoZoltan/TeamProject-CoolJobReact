@@ -1,7 +1,8 @@
 import FilterBar from '../filterbar/FilterBar';
-import React from 'react';
+import React, { useContext } from 'react';
 import JobsList from './JobsList';
 import styled from 'styled-components';
+import { FilterContext } from '../../Contexts/FilterContext';
 
 const StyledDiv = styled.div`
 	width: 85%;
@@ -19,10 +20,24 @@ const Div = styled.div`
 `;
 
 const JobsBox = () => {
+	const { optionsPositions, optionsType, optionsCompany, optionsLocation } = useContext(
+		FilterContext
+	);
+
 	return (
 		<React.Fragment>
 			<Div>
-				<FilterBar />
+				{optionsPositions.length > 0 &&
+					optionsType.length > 0 &&
+					optionsCompany.length > 0 &&
+					optionsLocation.length > 0 && (
+						<FilterBar
+							optionsPositions={optionsPositions}
+							optionsType={optionsType}
+							optionsCompany={optionsCompany}
+							optionsLocation={optionsLocation}
+						/>
+					)}
 			</Div>
 			<StyledDiv>
 				<JobsDiv>

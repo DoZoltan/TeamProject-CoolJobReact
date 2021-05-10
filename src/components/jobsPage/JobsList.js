@@ -12,7 +12,6 @@ const JobsList = () => {
 		<div>
 			{axiosError && <Error />}
 			{axiosIsLoading && <Load />}
-			{/*filteredJobs will be null by default, so the length property will be invalid*/}
 			{!axiosIsLoading && filteredJobs && (
 				<Row gutter={16}>
 					{filteredJobs.map((job) => (

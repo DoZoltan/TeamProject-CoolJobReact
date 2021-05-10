@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Menu, Input, AutoComplete, Button } from 'antd';
 import styled from 'styled-components';
 import { TheContext } from '../../Contexts/TheContext';
 import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
-import useAxiosGet from '../../axios/useAxiosGet';
 
 const StyledMenu = styled(Menu)`
 	width: 215px;
@@ -14,12 +13,12 @@ const MenuItem = styled(Menu.Item)`
 	height: 50px !important;
 `;
 
-const FilterBar = () => {
+const FilterBar = (props) => {
 	const [inputTypeValue, setInputTypeValue] = useState('');
 	const [inputPositionValue, setInputPositionValue] = useState('');
 	const [inputLocationValue, setInputLocationValue] = useState('');
 	const [inputCompanyValue, setInputCompanyValue] = useState('');
-	const { axiosData, setFilteredJobs, AxiosGet } = useContext(TheContext);
+	const { AxiosGet, axiosData, setFilteredJobs } = useContext(TheContext);
 
 	AxiosGet('https://localhost:44318/api/Jobs');
 
@@ -31,47 +30,6 @@ const FilterBar = () => {
 	const locationFilter = document.getElementById('locationFilter');
 	const companyFilter = document.getElementById('companyFilter');
 	const positionFilter = document.getElementById('positionFilter');
-
-	const { data: uniqueCompanies } = useAxiosGet('https://localhost:44318/api/Filter/Company');
-	const { data: uniqueTypes } = useAxiosGet('https://localhost:44318/api/Filter/Type');
-	const { data: uniquePositions } = useAxiosGet('https://localhost:44318/api/Filter/Title');
-	const { data: uniqueLocations } = useAxiosGet('https://localhost:44318/api/Filter/Location');
-
-	const optionsPositions = [];
-	const optionsType = [];
-	const optionsCompany = [];
-	const optionsLocation = [];
-
-	if (
-		uniqueCompanies !== null &&
-		uniqueTypes !== null &&
-		uniquePositions !== null &&
-		uniqueLocations !== null
-	) {
-		uniquePositions.map((position) =>
-			optionsPositions.push({
-				value: position,
-			})
-		);
-
-		uniqueTypes.map((type) =>
-			optionsType.push({
-				value: type,
-			})
-		);
-
-		uniqueCompanies.map((company) =>
-			optionsCompany.push({
-				value: company,
-			})
-		);
-
-		uniqueLocations.map((location) =>
-			optionsLocation.push({
-				value: location,
-			})
-		);
-	}
 
 	const inputFiltersToEmpty = (usingFilter) => {
 		if (usingFilter === typeFilter.id) {
@@ -168,7 +126,7 @@ const FilterBar = () => {
 					style={{
 						width: 180,
 					}}
-					options={optionsType}
+					options={props.optionsType}
 					filterOption={(inputValue, option) =>
 						option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
 					}
@@ -186,7 +144,7 @@ const FilterBar = () => {
 					style={{
 						width: 180,
 					}}
-					options={optionsLocation}
+					options={props.optionsLocation}
 					filterOption={(inputValue, option) =>
 						option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
 					}
@@ -204,7 +162,7 @@ const FilterBar = () => {
 					style={{
 						width: 180,
 					}}
-					options={optionsCompany}
+					options={props.optionsCompany}
 					filterOption={(inputValue, option) =>
 						option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
 					}
@@ -222,7 +180,7 @@ const FilterBar = () => {
 					style={{
 						width: 180,
 					}}
-					options={optionsPositions}
+					options={props.optionsPositions}
 					filterOption={(inputValue, option) =>
 						option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
 					}

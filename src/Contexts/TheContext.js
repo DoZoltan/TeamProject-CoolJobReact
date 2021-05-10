@@ -7,7 +7,6 @@ export const TheProvider = (props) => {
 	const [axiosData, setAxiosData] = useState(null);
 	const [axiosIsLoading, setAxiosIsLoading] = useState(true);
 	const [axiosError, setAxiosError] = useState(null);
-	const [user, setUser] = useState(2); //will be null by default (after it will be an object)
 	const [filteredJobs, setFilteredJobs] = useState(null);
 	const [detail, setDetail] = useState(null);
 	const [onJob, setOnJob] = useState(true);
@@ -26,14 +25,12 @@ export const TheProvider = (props) => {
 				axiosError,
 				onJob,
 				axiosData,
-				user,
 				filteredJobs,
 				detail,
 				setOnJob,
 				setDetail,
 				setFilteredJobs,
 				AxiosGet,
-				setUser,
 			}}
 		>
 			{props.children}
