@@ -5,7 +5,6 @@ import UseAxiosPostForJob from '../../axios/useAxiosPostForJob';
 const { TextArea } = Input;
 
 const Add = () => {
-export const Add = () => {
 	const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
 	const onWebsiteChange = (value) => {
