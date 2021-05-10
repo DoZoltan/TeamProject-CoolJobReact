@@ -22,14 +22,36 @@
 detail 
 --------
 */
+#textContainer a:link {
+	word-break: break-all;
+}
 
-#imgLogo {
-	display: 'block';
-	margin-left: 'auto';
-	margin-right: 'auto';
-	margin-top: '8px';
-	width: '500px' !important;
-	height: 'auto';
+#jobTitle {
+	display: inline;
+}
+
+#detailHeader {
+	color: #f5fffa;
+	background-color: #000080;
+}
+#imgContainer {
+	text-align: center;
+	display: block;
+	padding-bottom: 10px;
+}
+
+.imgLogo {
+	display: block;
+	margin-top: 8px;
+	width: 500px !important;
+	height: 400px !important;
+}
+
+#textContainer {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 100px;
+	margin-right: 100px;
 }
 
 /* 
@@ -123,20 +145,6 @@ video {
 	float: right;
 }
 
-@media only screen and (max-width: 835px) {
-	.mobileVisible {
-		display: block !important;
-	}
-
-	.mobileHidden {
-		display: none;
-	}
-
-	.filterBarVisible {
-		display: none !important;
-	}
-}
-
 @media only screen and (max-width: 1431px) {
 	.mobileFilterVisible {
 		display: block;
@@ -163,6 +171,20 @@ video {
 	}
 }
 
+@media screen and (max-width: 1200px) {
+	.imgLogo {
+		width: 400px !important;
+		height: 300px !important;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.imgLogo {
+		width: 350px !important;
+		height: 250px !important;
+	}
+}
+
 @media screen and (max-width: 960px) {
 	.main > h1 {
 		font-size: 70px;
@@ -170,7 +192,46 @@ video {
 	}
 }
 
+@media only screen and (max-width: 835px) {
+	.mobileVisible {
+		display: block !important;
+	}
+
+	.mobileHidden {
+		display: none;
+	}
+
+	.filterBarVisible {
+		display: none !important;
+	}
+}
+
 @media screen and (max-width: 768px) {
+	#jobTitleBox {
+		font-size: 18px;
+	}
+
+	.imgLogo {
+		width: 300px !important;
+		height: 200px !important;
+	}
+
+	#detailHeader {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	#textContainer {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+	#headerTitle {
+		font-size: 18px;
+	}
+
 	main > h1 {
 		font-size: 50px;
 		margin-top: -100px;
@@ -178,5 +239,39 @@ video {
 
 	main > p {
 		font-size: 20px;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.imgLogo {
+		width: 250px !important;
+		height: 150px !important;
+	}
+
+	#detailHeader {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
+	#textContainer {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+
+	#jobTitleBox {
+		font-size: 16px;
+	}
+
+	#jobTitle {
+		font-size: 15px;
+	}
+}
+
+@media screen and (max-width: 295px) {
+	.imgLogo {
+		width: 200px !important;
+		height: 100px !important;
 	}
 }
