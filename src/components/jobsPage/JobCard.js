@@ -40,7 +40,12 @@ const JobCard = (props) => {
 					headStyle={{ textAlign: 'center' }}
 					hoverable
 					cover={
-						<StyledImage id={'img' + props.id} alt='example' src={props.company_logo} />
+						<StyledImage
+							style={{ maxWidth: '300px' }}
+							id={'img' + props.id}
+							alt='example'
+							src={props.company_logo}
+						/>
 					}
 					title={props.location}
 				>
