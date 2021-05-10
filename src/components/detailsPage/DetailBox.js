@@ -15,10 +15,7 @@ const Div = styled.div`
 export const DetailBox = () => {
 	return (
 		<React.Fragment>
-			<Div>
-				<FilterBar />
-			</Div>
-			<div className='jobsDiv'>
+			<div>
 				<DetailDiv>
 					<Detail />
 				</DetailDiv>
