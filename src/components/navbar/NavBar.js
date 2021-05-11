@@ -91,9 +91,14 @@ const NavBar = () => {
 								<i className='fas fa-bolt'></i>
 							</Link>
 						</Menu.Item>
+						{location.pathname === '/jobs' && (
+							<Menu.Item key='2' id={'filterBarButton'} onClick={showSecondDrawer}>
+								<i className='fas fa-search'></i>
+							</Menu.Item>
+						)}
 						<Menu.Item
-							key='2'
-							id={'reloadButton'}
+							key='3'
+							id={'menuButton'}
 							style={{ float: 'right' }}
 							onClick={showDrawer}
 						>
@@ -118,33 +123,28 @@ const NavBar = () => {
 									Jobs
 								</Link>
 							</Menu.Item>
-							{location.pathname === '/jobs' && (
-								<Menu.Item key='3' onClick={showSecondDrawer}>
-									Search in jobs
-								</Menu.Item>
-							)}
-							<Menu.Item key='4'>
+							<Menu.Item key='3'>
 								<Link id={'linkToFavorites'} to='/favorite'>
 									Favorites
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='5'>
+							<Menu.Item key='4'>
 								<Link id={'linkToAdd'} to='/add'>
 									Add advertisement
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='6'>
+							<Menu.Item key='5'>
 								<Link id={'linkToRegistration'} to='/registration'>
 									Registration
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='7'>
+							<Menu.Item key='6'>
 								<Link id={'linkToLogin'} to='/login'>
 									Login
 								</Link>
 							</Menu.Item>
 							<Menu.Item
-								key='8'
+								key='7'
 								id={'reloadButton'}
 								style={{
 									color: 'white',
