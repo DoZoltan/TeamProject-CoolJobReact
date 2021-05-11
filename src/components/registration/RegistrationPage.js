@@ -1,6 +1,6 @@
 import React from 'react';
 import Agreement from '../registration/Agreement';
-import { AutoComplete, Form, Input, Select, Row, Col, Checkbox, Button } from 'antd';
+import { Form, Input, Select, Row, Col, Checkbox, Button } from 'antd';
 const { Option } = Select;
 
 const formItemLayout = {
@@ -235,10 +235,8 @@ const RegistrationPage = () => {
 					]}
 					{...tailFormItemLayout}
 				>
-					<Checkbox>
-						<p>
-							I have read the <Agreement />
-						</p>
+					<Checkbox style={{ display: 'in-line' }}>
+						I have read the <Agreement />
 					</Checkbox>
 				</Form.Item>
 				<Form.Item {...tailFormItemLayout}>
