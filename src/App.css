@@ -146,11 +146,15 @@ video {
 }
 
 @media only screen and (max-width: 1431px) {
+	.active {
+		display: block !important;
+		z-index: 1 !important;
+	}
 	.mobileFilterVisible {
 		display: block;
 	}
 
-	.mobileFilterHidden {
+	.filterDiv {
 		display: none;
 	}
 
@@ -208,8 +212,8 @@ video {
 		font-size: 55px;
 		margin-top: -170px;
 	}
-	main > p {
-		font-size: 20px !important;
+	.main > p {
+		font-size: 30px;
 	}
 	.mobileVisible {
 		display: block !important;
@@ -220,21 +224,18 @@ video {
 	}
 
 	.filterBarVisible {
-		display: none !important;
-	}
-}
-
-@media screen and (max-width: 780px) {
-	.main > h1 {
-		font-size: 50px;
-		margin-top: -150px;
-	}
-	main > p {
-		font-size: 20px;
+		display: none;
 	}
 }
 
 @media screen and (max-width: 768px) {
+	.main > h1 {
+		font-size: 50px;
+		margin-top: -150px;
+	}
+	.main > p {
+		font-size: 20px;
+	}
 	#jobTitleBox {
 		font-size: 18px;
 	}
@@ -261,23 +262,30 @@ video {
 	}
 }
 
-@media screen and (max-width: 500px) {
-	main > h1 {
-		font-size: 20px;
+@media screen and (max-width: 600px) {
+	.main > h1 {
+		font-size: 40px;
 		margin-top: -180px;
 	}
-	main > p {
-		font-size: 15px;
+	.main > p {
+		font-size: 20px;
+	}
+}
+
+@media screen and (max-width: 485px) {
+	.main > h1 {
+		font-size: 35px;
+		margin-top: -180px;
 	}
 }
 
 @media screen and (max-width: 450px) {
-	main > h1 {
-		font-size: 20px;
+	.main > h1 {
+		font-size: 30px;
 		margin-top: -180px;
 	}
-	main > p {
-		font-size: 15px;
+	.main > p {
+		font-size: 16px;
 	}
 	.imgLogo {
 		width: 250px !important;
