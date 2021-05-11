@@ -16,9 +16,8 @@ const Div = styled.div`
 `;
 
 const JobsBox = () => {
-	const { optionsPositions, optionsType, optionsCompany, optionsLocation } = useContext(
-		FilterContext
-	);
+	const { optionsPositions, optionsType, optionsCompany, optionsLocation } =
+		useContext(FilterContext);
 
 	return (
 		<React.Fragment>
