@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu, Drawer } from 'antd';
 
 import styled from 'styled-components';
-import FilterBar from '../filterbar/FilterBar';
 
 const StickyHeader = styled.header`
 	position: fixed;
@@ -119,28 +118,33 @@ const NavBar = () => {
 									Jobs
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='3'>
+							{location.pathname === '/jobs' && (
+								<Menu.Item key='3' onClick={showSecondDrawer}>
+									Search in jobs
+								</Menu.Item>
+							)}
+							<Menu.Item key='4'>
 								<Link id={'linkToFavorites'} to='/favorite'>
 									Favorites
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='4'>
+							<Menu.Item key='5'>
 								<Link id={'linkToAdd'} to='/add'>
 									Add advertisement
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='5'>
+							<Menu.Item key='6'>
 								<Link id={'linkToRegistration'} to='/registration'>
 									Registration
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='6'>
+							<Menu.Item key='7'>
 								<Link id={'linkToLogin'} to='/login'>
 									Login
 								</Link>
 							</Menu.Item>
 							<Menu.Item
-								key='7'
+								key='8'
 								id={'reloadButton'}
 								style={{
 									color: 'white',
@@ -213,9 +217,7 @@ const NavBar = () => {
 						closable={false}
 						onClose={onDrawerClose}
 						visible={visible2}
-					>
-						{/* <FilterBar /> */}
-					</Drawer>
+					></Drawer>
 				</div>
 			</StickyHeader>
 		</Header>
