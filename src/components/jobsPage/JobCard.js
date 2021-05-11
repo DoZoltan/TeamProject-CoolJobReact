@@ -5,11 +5,17 @@ import 'antd/dist/antd.css';
 import { Card, Col } from 'antd';
 import { TheContext } from '../../Contexts/TheContext';
 
+// const StyledImage = styled.img`
+// 	margin-top: 1px;
+// 	width: 12em;
+// 	height: 10em;
+// 	display: block;
+// 	margin-left: auto;
+// 	margin-right: auto;
+// `;
 const StyledImage = styled.img`
-	margin-top: 1px;
-	width: 12em;
 	height: 10em;
-	display: block;
+	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
 `;
@@ -19,16 +25,26 @@ const JobCard = (props) => {
 	const { Meta } = Card;
 
 	return (
-		<Col style={{ padding: '15px' }} span={6}>
+		<Col
+			xs={{ span: 24 }}
+			sm={{ span: 12 }}
+			md={{ span: 8 }}
+			lg={{ span: 6 }}
+			xl={window.location.pathname === '/jobs' ? { span: 6 } : { span: 4 }}
+		>
 			<Link onClick={() => setDetail(props)} to={'/detail/' + props.id}>
 				<Card
 					id={props.id}
 					key={props.id}
 					headStyle={{ textAlign: 'center' }}
 					hoverable
-					style={{ width: 280, height: 300 }}
 					cover={
-						<StyledImage id={'img' + props.id} alt='example' src={props.company_logo} />
+						<StyledImage
+							style={{ maxWidth: '300px' }}
+							id={'img' + props.id}
+							alt='example'
+							src={props.company_logo}
+						/>
 					}
 					title={props.location}
 				>

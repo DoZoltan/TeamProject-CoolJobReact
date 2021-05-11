@@ -4,11 +4,6 @@ import JobsList from './JobsList';
 import styled from 'styled-components';
 import { FilterContext } from '../../Contexts/FilterContext';
 
-const StyledDiv = styled.div`
-	width: 85%;
-	float: right;
-`;
-
 const JobsDiv = styled.div`
 	padding: 15px;
 	background: #ececec;
@@ -17,16 +12,16 @@ const JobsDiv = styled.div`
 const Div = styled.div`
 	position: fixed;
 	float: left;
+	background: #ececec;
 `;
 
 const JobsBox = () => {
-	const { optionsPositions, optionsType, optionsCompany, optionsLocation } = useContext(
-		FilterContext
-	);
+	const { optionsPositions, optionsType, optionsCompany, optionsLocation } =
+		useContext(FilterContext);
 
 	return (
 		<React.Fragment>
-			<Div>
+			<Div className='filterDiv'>
 				{optionsPositions.length > 0 &&
 					optionsType.length > 0 &&
 					optionsCompany.length > 0 &&
@@ -39,11 +34,11 @@ const JobsBox = () => {
 						/>
 					)}
 			</Div>
-			<StyledDiv>
+			<div className='jobsDiv'>
 				<JobsDiv>
 					<JobsList />
 				</JobsDiv>
-			</StyledDiv>
+			</div>
 		</React.Fragment>
 	);
 };
