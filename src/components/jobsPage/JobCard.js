@@ -26,7 +26,6 @@ const JobCard = (props) => {
 
 	return (
 		<Col
-			style={{ padding: '15px' }}
 			xs={{ span: 24 }}
 			sm={{ span: 12 }}
 			md={{ span: 8 }}
