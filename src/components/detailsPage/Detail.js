@@ -13,8 +13,6 @@ const Detail = (props) => {
 	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	const [existInFavorite, setExistInFavorite] = useState(false);
 	const { user } = useContext(UserContext);
-	const [visible, setVisible] = React.useState(false);
-	const [confirmLoading, setConfirmLoading] = React.useState(false);
 
 	useEffect(() => {
 		// The user is a simple number now
@@ -32,23 +30,6 @@ const Detail = (props) => {
 		};
 		JobExistInFavorite();
 	}, [props.details.id, user]);
-
-	const showPopconfirm = () => {
-		setVisible(true);
-	};
-
-	const handleOk = () => {
-		setConfirmLoading(true);
-		setTimeout(() => {
-			setVisible(false);
-			setConfirmLoading(false);
-		}, 2000);
-	};
-
-	const handleCancel = () => {
-		console.log('Clicked cancel button');
-		setVisible(false);
-	};
 
 	const AddJobToFavoriteList = () => {
 		UseAxiosPostForJob(props.details, 'https://localhost:44318/api/Favorites');
@@ -176,17 +157,6 @@ const Detail = (props) => {
 					>
 						Add to favorites
 					</Button>
-					{/* <Popconfirm
-					title='Title'
-					visible={visible}
-					onConfirm={handleOk}
-					okButtonProps={{ loading: confirmLoading }}
-					onCancel={handleCancel}
-				>
-					<Button type='primary' onClick={showPopconfirm}>
-						Open Popconfirm with async logic
-					</Button>
-				</Popconfirm> */}
 					<Button
 						id={'deleteFromFavoriteButton'}
 						style={{
