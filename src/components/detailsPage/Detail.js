@@ -14,6 +14,22 @@ const Detail = (props) => {
 	const [existInFavorite, setExistInFavorite] = useState(false);
 	const { user } = useContext(UserContext);
 
+	const history = useHistory();
+
+	/*
+	let pathName = history.location.pathname;
+
+	console.log(history.location.pathname);
+
+	useEffect(() => {
+		if (pathName.includes('favorites')) {
+			setExistInFavorite(true);
+		} else {
+			setExistInFavorite(false);
+		}
+	}, [pathName]);
+	*/
+
 	useEffect(() => {
 		// The user is a simple number now
 		// After the user will be an object then we have to get the ID property of it
@@ -34,8 +50,6 @@ const Detail = (props) => {
 	const AddJobToFavoriteList = () => {
 		UseAxiosPostForJob(props.details, 'https://localhost:44318/api/Favorites');
 	};
-
-	const history = useHistory();
 
 	const DeleteJobFromFavoriteList = async () => {
 		// The user is a simple number now
