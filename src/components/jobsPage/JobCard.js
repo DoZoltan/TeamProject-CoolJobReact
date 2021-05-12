@@ -1,18 +1,11 @@
-import React, { useContext } from 'react';
+//import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { Card, Col } from 'antd';
-import { TheContext } from '../../Contexts/TheContext';
+//import { TheContext } from '../../Contexts/TheContext';
+import { useHistory } from 'react-router-dom';
 
-// const StyledImage = styled.img`
-// 	margin-top: 1px;
-// 	width: 12em;
-// 	height: 10em;
-// 	display: block;
-// 	margin-left: auto;
-// 	margin-right: auto;
-// `;
 const StyledImage = styled.img`
 	height: 10em;
 	width: 90%;
@@ -21,8 +14,10 @@ const StyledImage = styled.img`
 `;
 
 const JobCard = (props) => {
-	const { setDetail } = useContext(TheContext);
+	//const { setDetail } = useContext(TheContext); //remove it
 	const { Meta } = Card;
+
+	const history = useHistory();
 
 	return (
 		<Col
@@ -32,7 +27,7 @@ const JobCard = (props) => {
 			lg={{ span: 6 }}
 			xl={window.location.pathname === '/jobs' ? { span: 6 } : { span: 4 }}
 		>
-			<Link onClick={() => setDetail(props)} to={'/detail/' + props.id}>
+			<Link to={`${history.location.pathname}/${props.id}`}>
 				<Card
 					id={props.id}
 					key={props.id}
