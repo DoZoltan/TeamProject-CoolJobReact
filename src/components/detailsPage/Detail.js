@@ -16,20 +16,6 @@ const Detail = (props) => {
 
 	const history = useHistory();
 
-	/*
-	let pathName = history.location.pathname;
-
-	console.log(history.location.pathname);
-
-	useEffect(() => {
-		if (pathName.includes('favorites')) {
-			setExistInFavorite(true);
-		} else {
-			setExistInFavorite(false);
-		}
-	}, [pathName]);
-	*/
-
 	useEffect(() => {
 		// The user is a simple number now
 		// After the user will be an object then we have to get the ID property of it
