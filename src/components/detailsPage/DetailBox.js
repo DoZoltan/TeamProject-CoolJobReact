@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import Detail from './Detail';
 import { BackTop } from 'antd';
-//import { TheContext } from '../../Contexts/TheContext';
 import Load from '../loadAndError/Load';
 import Error from '../loadAndError/Error';
 import { useHistory } from 'react-router-dom';
@@ -9,26 +8,31 @@ import useAxiosGet from '../../axios/useAxiosGet';
 import { UserContext } from '../../Contexts/UserContext';
 
 const DetailBox = () => {
-	//const { detail, axiosIsLoading, axiosError } = useContext(TheContext);
 	const { user } = useContext(UserContext);
 
 	const history = useHistory();
 
+	// Get the current path
+	// It can be /favorites/:id OR /jobs/:id
 	let pathName = history.location.pathname;
-	let axiosUrl = '';
 
+	let apiUrl = '';
+
+	// Build the API URL depending on the current path
 	if (pathName.includes('favorites')) {
 		// The user is a simple number now
 		// After the user will be an object then we have to get the ID property of it
-		axiosUrl = `https://localhost:44318/api${history.location.pathname}/${user}`;
+		apiUrl = `https://localhost:44318/api${history.location.pathname}/${user}`;
 	} else if (pathName.includes('jobs')) {
-		axiosUrl = `https://localhost:44318/api${history.location.pathname}`;
+		apiUrl = `https://localhost:44318/api${history.location.pathname}`;
 	} else {
-		console.log('error');
+		console.log('Error: How did you get here?');
 	}
 
-	const { data, isLoading, error } = useAxiosGet(axiosUrl);
+	// Get the data from the builded API URL
+	const { data, isLoading, error } = useAxiosGet(apiUrl);
 
+	// Load the job or the favorite details
 	return (
 		<React.Fragment>
 			{error && <Error error={error} />}
@@ -37,17 +41,6 @@ const DetailBox = () => {
 			<BackTop />
 		</React.Fragment>
 	);
-
-	/*
-	return (
-		<React.Fragment>
-			{axiosError && <Error />}
-			{axiosIsLoading && <Load />}
-			{!axiosIsLoading && detail && <Detail details={detail} />}
-			<BackTop />
-		</React.Fragment>
-	);
-	*/
 };
 
 export default DetailBox;
