@@ -30,11 +30,12 @@ const App = () => {
 							</Route>
 							<Route path='/main' component={Main} />
 							<FilterProvider>
-								<Route path='/jobs' component={JobsBox} />
+								<Route exact path='/jobs' component={JobsBox} />
+								<Route exact path='/jobs/:id' component={DetailBox} />
+								<Route exact path='/favorites' component={FavoriteBox} />
+								<Route exact path='/favorites/:id' component={DetailBox} />
 							</FilterProvider>
-							<Route path='/favorite' component={FavoriteBox} />
 							<Route path='/add' component={Add} />
-							<Route path='/detail' component={DetailBox} />
 							<Route path='/login' component={LoginPage} />
 							<Route path='/registration' component={RegistrationPage} />
 						</div>

@@ -32,7 +32,7 @@ const FavoriteBox = () => {
 		<MainDiv>
 			<StyledDiv>
 				<FavoriteDiv>
-					{error && <Error />}
+					{error && <Error error={error} />}
 					{isLoading && <Load />}
 					{!isLoading && data && <FavoriteList favorites={data} />}
 				</FavoriteDiv>

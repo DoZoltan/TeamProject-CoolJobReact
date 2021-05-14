@@ -6,10 +6,16 @@ const StyledDiv = styled.div`
 	font-size: 100px;
 `;
 
-const Error = () => {
+const Error = (props) => {
+	//remove this, and use only the props version if possible
 	const { axiosError } = useContext(TheContext);
 
-	return <StyledDiv>{axiosError}</StyledDiv>;
+	return (
+		<StyledDiv>
+			<p>{axiosError}</p>
+			<div>{props.error && <p>{props.error}</p>}</div>
+		</StyledDiv>
+	);
 };
 
 export default Error;

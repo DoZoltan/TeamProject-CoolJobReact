@@ -51,7 +51,7 @@ const NavBar = () => {
 							</Link>
 						</Menu.Item>
 						<Menu.Item key='4'>
-							<Link id={'linkToFavorites'} to='/favorite'>
+							<Link id={'linkToFavorites'} to='/favorites'>
 								Favorites
 							</Link>
 						</Menu.Item>

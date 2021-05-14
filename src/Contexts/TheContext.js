@@ -8,7 +8,6 @@ export const TheProvider = (props) => {
 	const [axiosIsLoading, setAxiosIsLoading] = useState(true);
 	const [axiosError, setAxiosError] = useState(null);
 	const [filteredJobs, setFilteredJobs] = useState(null);
-	const [detail, setDetail] = useState(null);
 
 	const AxiosGet = async (url) => {
 		const { data, isLoading, error } = await useAxiosGet(url);
@@ -24,8 +23,6 @@ export const TheProvider = (props) => {
 				axiosError,
 				axiosData,
 				filteredJobs,
-				detail,
-				setDetail,
 				setFilteredJobs,
 				AxiosGet,
 			}}
