@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu, Drawer } from 'antd';
+import { DisplayFilterBarContext } from '../../Contexts/DisplayFilterBarContext';
 
 import styled from 'styled-components';
 
@@ -16,19 +17,12 @@ const NavBar = () => {
 	const { Header } = Layout;
 	const location = useLocation();
 	const [visible, setVisible] = useState(false);
-	const [visible2, setVisible2] = useState(false);
+	const { setShowFilterBarReverse } = useContext(DisplayFilterBarContext);
 	const showDrawer = () => {
 		setVisible(true);
 	};
 	const onClose = () => {
 		setVisible(false);
-	};
-
-	const showSecondDrawer = () => {
-		setVisible2(true);
-	};
-	const onDrawerClose = () => {
-		setVisible2(false);
 	};
 	return (
 		<Header key='header' className='header'>
@@ -92,7 +86,11 @@ const NavBar = () => {
 							</Link>
 						</Menu.Item>
 						{location.pathname === '/jobs' && (
-							<Menu.Item key='2' id={'filterBarButton'} onClick={showSecondDrawer}>
+							<Menu.Item
+								key='2'
+								id={'filterBarButton'}
+								onClick={setShowFilterBarReverse}
+							>
 								<i className='fas fa-search'></i>
 							</Menu.Item>
 						)}
@@ -165,7 +163,11 @@ const NavBar = () => {
 							</Link>
 						</Menu.Item>
 						{location.pathname === '/jobs' && (
-							<Menu.Item key='2' id={'filterBarButton'} onClick={showSecondDrawer}>
+							<Menu.Item
+								key='2'
+								id={'filterBarButton'}
+								onClick={setShowFilterBarReverse}
+							>
 								<i className='fas fa-search'></i>
 							</Menu.Item>
 						)}
@@ -212,12 +214,6 @@ const NavBar = () => {
 							Click to reload!
 						</Menu.Item>
 					</Menu>
-					<Drawer
-						placement='left'
-						closable={false}
-						onClose={onDrawerClose}
-						visible={visible2}
-					></Drawer>
 				</div>
 			</StickyHeader>
 		</Header>
