@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { AutoComplete, Form, Input, Button } from 'antd';
 import UseAxiosPostForJob from '../../axios/useAxiosPostForJob';
-import { useHistory } from 'react-router';
 
 const { TextArea } = Input;
 
 const Add = () => {
 	const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-	const history = useHistory();
 
 	const onWebsiteChange = (value) => {
 		if (!value) {
@@ -55,7 +53,7 @@ const Add = () => {
 
 		UseAxiosPostForJob(result, 'https://localhost:44318/api/Jobs');
 		setTimeout(500);
-		history.push('/jobs');
+		window.location.href = '/jobs';
 	};
 
 	const formItemLayout = {
