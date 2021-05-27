@@ -93,6 +93,7 @@ const Add = () => {
 				<h2>Add new advertisement</h2>
 			</div>
 			<Form
+				autoComplete='off'
 				{...formItemLayout}
 				name='add-advertisement'
 				onFinish={onFinish}
