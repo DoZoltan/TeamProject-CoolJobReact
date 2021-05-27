@@ -64,6 +64,8 @@ const Detail = (props) => {
 						backgroundColor: '#2F4F4F',
 						marginTop: '15px',
 						float: 'right',
+						height: '60%',
+						width: '100px',
 					}}
 				>
 					Back
