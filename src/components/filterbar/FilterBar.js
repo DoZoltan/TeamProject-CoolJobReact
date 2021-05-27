@@ -4,16 +4,33 @@ import { Menu, Input, AutoComplete, Button } from 'antd';
 import styled from 'styled-components';
 import { TheContext } from '../../Contexts/TheContext';
 import UseSimpleGetAxios from '../../axios/useSimpleGetAxios';
+import { DisplayFilterBarContext } from '../../Contexts/DisplayFilterBarContext';
 
-const StyledMenu = styled(Menu)`
-	width: 215px;
+const HorizontalMenuItem = styled(Menu.Item)`
+	vertical-alignment: center;
+	width: 19%;
+	margin: 0px 4px !important;
 `;
 
-const MenuItem = styled(Menu.Item)`
+const HorizontalAutoComplete = styled(AutoComplete)`
+	width: 100%;
+`;
+
+const VerticalMenuItem = styled(Menu.Item)`
 	height: 50px !important;
+	width: 100%;
+`;
+
+const TwoLineMenuItem = styled.div`
+	margin: 10px 4px 0px 4px;
+`;
+
+const OneLineMenuItem = styled.div`
+	margin: 10px 4px 0px 4px;
 `;
 
 const FilterBar = (props) => {
+	const { showFilterBar } = useContext(DisplayFilterBarContext);
 	const [inputTypeValue, setInputTypeValue] = useState('');
 	const [inputPositionValue, setInputPositionValue] = useState('');
 	const [inputLocationValue, setInputLocationValue] = useState('');
@@ -117,17 +134,15 @@ const FilterBar = (props) => {
 
 	return (
 		<div className='filter-context'>
-			<div className='mobileFilterHidden'>
-				<StyledMenu>
-					<MenuItem key='1'>
+			<div className='verticalFilterBar'>
+				<Menu mode='vertical'>
+					<VerticalMenuItem key='1'>
 						<AutoComplete
+							style={{ width: '100% !important' }}
 							value={inputTypeValue}
 							id={'typeFilter'}
 							dropdownClassName='certain-category-search-dropdown'
 							dropdownMatchSelectWidth={300}
-							style={{
-								width: 180,
-							}}
 							options={props.optionsType}
 							filterOption={(inputValue, option) =>
 								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -136,16 +151,13 @@ const FilterBar = (props) => {
 						>
 							<Input.Search size='large' placeholder='Type' />
 						</AutoComplete>
-					</MenuItem>
-					<MenuItem key='2'>
+					</VerticalMenuItem>
+					<VerticalMenuItem key='2'>
 						<AutoComplete
 							value={inputLocationValue}
 							id={'locationFilter'}
 							dropdownClassName='certain-category-search-dropdown'
 							dropdownMatchSelectWidth={300}
-							style={{
-								width: 180,
-							}}
 							options={props.optionsLocation}
 							filterOption={(inputValue, option) =>
 								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -158,16 +170,13 @@ const FilterBar = (props) => {
 								placeholder='Location'
 							/>
 						</AutoComplete>
-					</MenuItem>
-					<MenuItem key='3'>
+					</VerticalMenuItem>
+					<VerticalMenuItem key='3'>
 						<AutoComplete
 							value={inputCompanyValue}
 							id={'companyFilter'}
 							dropdownClassName='certain-category-search-dropdown'
 							dropdownMatchSelectWidth={300}
-							style={{
-								width: 180,
-							}}
 							options={props.optionsCompany}
 							filterOption={(inputValue, option) =>
 								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -176,16 +185,13 @@ const FilterBar = (props) => {
 						>
 							<Input.Search size='large' placeholder='Company' />
 						</AutoComplete>
-					</MenuItem>
-					<MenuItem key='4'>
+					</VerticalMenuItem>
+					<VerticalMenuItem key='4'>
 						<AutoComplete
 							value={inputPositionValue}
 							id={'positionFilter'}
 							dropdownClassName='certain-category-search-dropdown'
 							dropdownMatchSelectWidth={800}
-							style={{
-								width: 180,
-							}}
 							options={props.optionsPositions}
 							filterOption={(inputValue, option) =>
 								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -194,14 +200,264 @@ const FilterBar = (props) => {
 						>
 							<Input.Search size='large' placeholder='Position' />
 						</AutoComplete>
-					</MenuItem>
+					</VerticalMenuItem>
 
-					<MenuItem key='5'>
+					<VerticalMenuItem key='5'>
 						<Button id={'resetFilterButton'} onClick={resetFilters}>
 							Reset Filters
 						</Button>
-					</MenuItem>
-				</StyledMenu>
+					</VerticalMenuItem>
+				</Menu>
+			</div>
+			<div style={{ display: showFilterBar ? 'block' : 'none' }}>
+				<div className='horizontalFilterBar'>
+					<Menu mode='horizontal' style={{ height: '100%' }}>
+						<HorizontalMenuItem key='1'>
+							<HorizontalAutoComplete
+								value={inputTypeValue}
+								id={'typeFilter'}
+								dropdownClassName='certain-category-search-dropdown'
+								dropdownMatchSelectWidth={300}
+								options={props.optionsType}
+								filterOption={(inputValue, option) =>
+									option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+									-1
+								}
+								onChange={changeCardListByType}
+							>
+								<Input.Search size='large' placeholder='Type' />
+							</HorizontalAutoComplete>
+						</HorizontalMenuItem>
+						<HorizontalMenuItem key='2'>
+							<HorizontalAutoComplete
+								value={inputLocationValue}
+								id={'locationFilter'}
+								dropdownClassName='certain-category-search-dropdown'
+								dropdownMatchSelectWidth={300}
+								options={props.optionsLocation}
+								filterOption={(inputValue, option) =>
+									option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+									-1
+								}
+								onChange={changeCardListByLocation}
+							>
+								<Input.Search
+									id={'locationInput'}
+									size='large'
+									placeholder='Location'
+								/>
+							</HorizontalAutoComplete>
+						</HorizontalMenuItem>
+						<HorizontalMenuItem key='3'>
+							<HorizontalAutoComplete
+								value={inputCompanyValue}
+								id={'companyFilter'}
+								dropdownClassName='certain-category-search-dropdown'
+								dropdownMatchSelectWidth={300}
+								options={props.optionsCompany}
+								filterOption={(inputValue, option) =>
+									option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+									-1
+								}
+								onChange={changeCardListByCompany}
+							>
+								<Input.Search size='large' placeholder='Company' />
+							</HorizontalAutoComplete>
+						</HorizontalMenuItem>
+						<HorizontalMenuItem key='4'>
+							<HorizontalAutoComplete
+								value={inputPositionValue}
+								id={'positionFilter'}
+								dropdownClassName='certain-category-search-dropdown'
+								dropdownMatchSelectWidth={800}
+								options={props.optionsPositions}
+								filterOption={(inputValue, option) =>
+									option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+									-1
+								}
+								onChange={changeCardListByPositions}
+							>
+								<Input.Search size='large' placeholder='Position' />
+							</HorizontalAutoComplete>
+						</HorizontalMenuItem>
+
+						<HorizontalMenuItem key='5' style={{ textAlign: 'right' }}>
+							<Button id={'resetFilterButton'} onClick={resetFilters}>
+								Reset Filters
+							</Button>
+						</HorizontalMenuItem>
+					</Menu>
+				</div>
+				<div className='twoLineFilterBar'>
+					<div style={{ width: '80%' }}>
+						<TwoLineMenuItem className='col'>
+							<HorizontalAutoComplete
+								value={inputTypeValue}
+								id={'typeFilter'}
+								dropdownClassName='certain-category-search-dropdown'
+								dropdownMatchSelectWidth={300}
+								options={props.optionsType}
+								filterOption={(inputValue, option) =>
+									option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+									-1
+								}
+								onChange={changeCardListByType}
+							>
+								<Input.Search size='large' placeholder='Type' />
+							</HorizontalAutoComplete>
+						</TwoLineMenuItem>
+						<TwoLineMenuItem className='col'>
+							<HorizontalAutoComplete
+								value={inputLocationValue}
+								id={'locationFilter'}
+								dropdownClassName='certain-category-search-dropdown'
+								dropdownMatchSelectWidth={300}
+								options={props.optionsLocation}
+								filterOption={(inputValue, option) =>
+									option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+									-1
+								}
+								onChange={changeCardListByLocation}
+							>
+								<Input.Search
+									id={'locationInput'}
+									size='large'
+									placeholder='Location'
+								/>
+							</HorizontalAutoComplete>
+						</TwoLineMenuItem>
+						<TwoLineMenuItem className='col'>
+							<HorizontalAutoComplete
+								value={inputCompanyValue}
+								id={'companyFilter'}
+								dropdownClassName='certain-category-search-dropdown'
+								dropdownMatchSelectWidth={300}
+								options={props.optionsCompany}
+								filterOption={(inputValue, option) =>
+									option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+									-1
+								}
+								onChange={changeCardListByCompany}
+							>
+								<Input.Search size='large' placeholder='Company' />
+							</HorizontalAutoComplete>
+						</TwoLineMenuItem>
+						<TwoLineMenuItem
+							className='col'
+							style={{ display: showFilterBar ? 'block' : 'none' }}
+						>
+							<HorizontalAutoComplete
+								value={inputPositionValue}
+								id={'positionFilter'}
+								dropdownClassName='certain-category-search-dropdown'
+								dropdownMatchSelectWidth={800}
+								options={props.optionsPositions}
+								filterOption={(inputValue, option) =>
+									option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+									-1
+								}
+								onChange={changeCardListByPositions}
+							>
+								<Input.Search size='large' placeholder='Position' />
+							</HorizontalAutoComplete>
+						</TwoLineMenuItem>
+					</div>
+					<div
+						style={{
+							width: '19%',
+							float: 'right',
+							textAlign: 'center',
+							height: '50%',
+							marginTop: '-40px',
+							marginRight: '5px',
+						}}
+					>
+						<TwoLineMenuItem>
+							<Button
+								id={'resetFilterButton'}
+								onClick={resetFilters}
+								style={{ height: '70px' }}
+							>
+								Reset Filters
+							</Button>
+						</TwoLineMenuItem>
+					</div>
+				</div>
+				<div className='oneLineFilterBar'>
+					<OneLineMenuItem>
+						<HorizontalAutoComplete
+							value={inputTypeValue}
+							id={'typeFilter'}
+							dropdownClassName='certain-category-search-dropdown'
+							dropdownMatchSelectWidth={300}
+							options={props.optionsType}
+							filterOption={(inputValue, option) =>
+								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+							}
+							onChange={changeCardListByType}
+						>
+							<Input.Search size='large' placeholder='Type' />
+						</HorizontalAutoComplete>
+					</OneLineMenuItem>
+					<OneLineMenuItem>
+						<HorizontalAutoComplete
+							value={inputLocationValue}
+							id={'locationFilter'}
+							dropdownClassName='certain-category-search-dropdown'
+							dropdownMatchSelectWidth={300}
+							options={props.optionsLocation}
+							filterOption={(inputValue, option) =>
+								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+							}
+							onChange={changeCardListByLocation}
+						>
+							<Input.Search
+								id={'locationInput'}
+								size='large'
+								placeholder='Location'
+							/>
+						</HorizontalAutoComplete>
+					</OneLineMenuItem>
+					<OneLineMenuItem>
+						<HorizontalAutoComplete
+							value={inputCompanyValue}
+							id={'companyFilter'}
+							dropdownClassName='certain-category-search-dropdown'
+							dropdownMatchSelectWidth={300}
+							options={props.optionsCompany}
+							filterOption={(inputValue, option) =>
+								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+							}
+							onChange={changeCardListByCompany}
+						>
+							<Input.Search size='large' placeholder='Company' />
+						</HorizontalAutoComplete>
+					</OneLineMenuItem>
+					<OneLineMenuItem>
+						<HorizontalAutoComplete
+							value={inputPositionValue}
+							id={'positionFilter'}
+							dropdownClassName='certain-category-search-dropdown'
+							dropdownMatchSelectWidth={800}
+							options={props.optionsPositions}
+							filterOption={(inputValue, option) =>
+								option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+							}
+							onChange={changeCardListByPositions}
+						>
+							<Input.Search size='large' placeholder='Position' />
+						</HorizontalAutoComplete>
+					</OneLineMenuItem>
+					<OneLineMenuItem>
+						<Button
+							id={'resetFilterButton'}
+							onClick={resetFilters}
+							style={{ width: '100%' }}
+						>
+							Reset Filters
+						</Button>
+					</OneLineMenuItem>
+				</div>
 			</div>
 		</div>
 	);

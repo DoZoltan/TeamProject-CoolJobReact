@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { TheProvider } from './Contexts/TheContext';
 import { UserProvider } from './Contexts/UserContext';
 import { FilterProvider } from './Contexts/FilterContext';
+import { DisplayFilterBarProvider } from './Contexts/DisplayFilterBarContext';
 import './App.css';
 import 'antd/dist/antd.css';
 
@@ -19,28 +20,30 @@ const App = () => {
 	return (
 		<TheProvider>
 			<UserProvider>
-				<Router>
-					<div>
+				<DisplayFilterBarProvider>
+					<Router>
 						<div>
-							<NavBar />
+							<div>
+								<NavBar />
+							</div>
+							<div>
+								<Route exact path='/'>
+									<Redirect to='/main' />
+								</Route>
+								<Route path='/main' component={Main} />
+								<FilterProvider>
+									<Route exact path='/jobs' component={JobsBox} />
+									<Route exact path='/jobs/:id' component={DetailBox} />
+									<Route exact path='/favorites' component={FavoriteBox} />
+									<Route exact path='/favorites/:id' component={DetailBox} />
+								</FilterProvider>
+								<Route path='/add' component={Add} />
+								<Route path='/login' component={LoginPage} />
+								<Route path='/registration' component={RegistrationPage} />
+							</div>
 						</div>
-						<div>
-							<Route exact path='/'>
-								<Redirect to='/main' />
-							</Route>
-							<Route path='/main' component={Main} />
-							<FilterProvider>
-								<Route exact path='/jobs' component={JobsBox} />
-								<Route exact path='/jobs/:id' component={DetailBox} />
-								<Route exact path='/favorites' component={FavoriteBox} />
-								<Route exact path='/favorites/:id' component={DetailBox} />
-							</FilterProvider>
-							<Route path='/add' component={Add} />
-							<Route path='/login' component={LoginPage} />
-							<Route path='/registration' component={RegistrationPage} />
-						</div>
-					</div>
-				</Router>
+					</Router>
+				</DisplayFilterBarProvider>
 			</UserProvider>
 		</TheProvider>
 	);

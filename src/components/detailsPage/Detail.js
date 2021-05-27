@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
-import { Layout, Image, Button, Alert } from 'antd';
+import { Layout, Image, Button, Popconfirm, message } from 'antd';
 import UseAxiosPostForJob from '../../axios/useAxiosPostForJob';
 import useAxiosDelete from '../../axios/useAxiosDelete';
 import { useHistory } from 'react-router-dom';
@@ -9,11 +9,8 @@ import { UserContext } from '../../Contexts/UserContext';
 
 const Detail = (props) => {
 	const { Header, Footer, Content } = Layout;
-	const [successDisplay, setSuccessDisplay] = useState(false);
-	const [successDeleteDisplay, setSuccessDeleteDisplay] = useState(false);
 	const [existInFavorite, setExistInFavorite] = useState(false);
 	const { user } = useContext(UserContext);
-
 	const history = useHistory();
 
 	useEffect(() => {
@@ -35,44 +32,23 @@ const Detail = (props) => {
 
 	const AddJobToFavoriteList = () => {
 		UseAxiosPostForJob(props.details, 'https://localhost:44318/api/Favorites');
+		message.success('Added to favorites');
 	};
 
 	const DeleteJobFromFavoriteList = async () => {
 		// The user is a simple number now
 		// After the user will be an object then we have to get the ID property of it
 		await useAxiosDelete(`https://localhost:44318/api/Favorites/${props.details.id}/${user}`);
+		message.error('Deleted from favorites');
 	};
 
-	const alertTimeoutForAddSuccess = () => {
-		setTimeout(() => {
-			setSuccessDisplay(false);
-		}, 2000);
-	};
-
-	const alertTimeoutForDeleteSuccess = () => {
-		setTimeout(() => {
-			setSuccessDeleteDisplay(false);
-		}, 2000);
-	};
-
-	const SuccessAlertStyle = {
-		position: 'fixed',
-		display: `${successDisplay === true ? 'block' : 'none'}`,
-		zIndex: '2',
-		right: '8%',
-		bottom: '2%',
-		width: '300px',
-		textAlign: 'center',
-	};
-
-	const SuccessDeleteAlertStyle = {
-		position: 'fixed',
-		display: `${successDeleteDisplay === true ? 'block' : 'none'}`,
-		zIndex: '2',
-		right: '8%',
-		bottom: '2%',
-		width: '300px',
-		textAlign: 'center',
+	const BackTo = () => {
+		let pathName = history.location.pathname;
+		if (pathName.includes('jobs')) {
+			history.push('/jobs');
+		} else {
+			history.push('/favorites');
+		}
 	};
 
 	return (
@@ -81,7 +57,7 @@ const Detail = (props) => {
 				{/* <Link to={history.go(-1)}> */}
 				{/* <Link to={onJob === true ? '/jobs' : '/favorite'}> */}
 				<Button
-					onClick={() => history.go(-1)}
+					onClick={BackTo}
 					id={'backToButton'}
 					style={{
 						color: 'white',
@@ -118,64 +94,54 @@ const Detail = (props) => {
 						<h4 id={'jobDescription'}>descritpiton:</h4>
 						<p dangerouslySetInnerHTML={{ __html: props.details.description }} />
 					</div>
-					<Alert
-						id={'successAlert'}
-						style={SuccessAlertStyle}
-						message='Added to favorite jobs'
-						type='success'
-						showIcon
-					/>
-					<Alert
-						id={'deleteAlert'}
-						style={SuccessDeleteAlertStyle}
-						message='Deleted from favorite jobs'
-						type='error'
-						showIcon
-					/>
 				</Content>
 				<Footer id={'detailFooter'} style={{ padding: '0px' }}>
 					Added at : {props.details.created_at}
-					<Button
-						id={'addToFavoriteButton'}
-						style={{
-							color: 'white',
-							backgroundColor: '#2F4F4F',
-
-							float: 'right',
-							display: `${
-								existInFavorite === false && successDisplay === false
-									? 'block'
-									: 'none'
-							}`,
-						}}
-						onClick={() => {
-							alertTimeoutForAddSuccess();
-							setSuccessDisplay(true);
+					<Popconfirm
+						onConfirm={() => {
 							AddJobToFavoriteList();
 							setExistInFavorite(true);
 						}}
+						title='Are you sure add to favorites?'
+						okText='Yes'
+						cancelText='No'
 					>
-						Add to favorites
-					</Button>
-					<Button
-						id={'deleteFromFavoriteButton'}
-						style={{
-							color: 'white',
-							backgroundColor: '#2F4F4F',
+						<Button
+							id={'addToFavoriteButton'}
+							style={{
+								color: 'white',
+								backgroundColor: '#2F4F4F',
 
-							float: 'right',
-
-							display: `${existInFavorite === true ? 'block' : 'none'}`,
-						}}
-						onClick={() => {
-							alertTimeoutForDeleteSuccess();
-							setSuccessDeleteDisplay(true);
+								float: 'right',
+								display: `${existInFavorite === false ? 'block' : 'none'}`,
+							}}
+						>
+							Add to favorites
+						</Button>
+					</Popconfirm>
+					<Popconfirm
+						title='Are you sure delete from favorites?'
+						okText='Yes'
+						onConfirm={() => {
 							DeleteJobFromFavoriteList();
 							setExistInFavorite(false);
 						}}
+						cancelText='No'
 					>
-						Delete from favorites
-					</Button>
+						<Button
+							id={'deleteFromFavoriteButton'}
+							style={{
+								color: 'white',
+								backgroundColor: '#2F4F4F',
+
+								float: 'right',
+
+								display: `${existInFavorite === true ? 'block' : 'none'}`,
+							}}
+						>
+							Delete from favorites
+						</Button>
+					</Popconfirm>
 				</Footer>
 			</div>
 		</Layout>

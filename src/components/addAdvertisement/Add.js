@@ -50,9 +50,10 @@ const Add = () => {
 		result['title'] = values.title;
 		result['description'] = values.description;
 		result['how_to_apply'] = values.how_to_apply;
-		console.log(result);
 
 		UseAxiosPostForJob(result, 'https://localhost:44318/api/Jobs');
+		setTimeout(500);
+		window.location.href = '/jobs';
 	};
 
 	const formItemLayout = {

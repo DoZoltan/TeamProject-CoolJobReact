@@ -9,19 +9,13 @@ const JobsDiv = styled.div`
 	background: #ececec;
 `;
 
-const Div = styled.div`
-	position: fixed;
-	float: left;
-	background: #ececec;
-`;
-
 const JobsBox = () => {
 	const { optionsPositions, optionsType, optionsCompany, optionsLocation } =
 		useContext(FilterContext);
 
 	return (
 		<React.Fragment>
-			<Div className='filterDiv'>
+			<div className='filterDiv'>
 				{optionsPositions.length > 0 &&
 					optionsType.length > 0 &&
 					optionsCompany.length > 0 &&
@@ -33,7 +27,7 @@ const JobsBox = () => {
 							optionsLocation={optionsLocation}
 						/>
 					)}
-			</Div>
+			</div>
 			<div className='jobsDiv'>
 				<JobsDiv>
 					<JobsList />

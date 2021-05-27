@@ -10,12 +10,39 @@
 	display: none;
 }
 
-.mobileFilterVisible {
+.twoLineFilterBar {
+	top: 0;
+	left: 0;
 	display: none;
+	width: 100%;
+	height: 110px;
 }
 
-.mobileFilterHidden {
+.oneLineFilterBar {
+	display: none;
+	width: 100%;
+	height: 240px;
+}
+
+.col {
+	float: left;
+	width: 48%;
+	text-align: center;
+	height: 50%;
+}
+
+.horizontalFilterBar {
+	display: none;
+	width: 100%;
+	height: 60px;
+}
+
+.verticalFilterBar {
 	display: block;
+	width: 15%;
+	position: fixed;
+	float: left;
+	background-color: #ececec !important;
 }
 
 /* 
@@ -146,17 +173,25 @@ video {
 }
 
 @media only screen and (max-width: 1431px) {
+	.oneLineFilterBar {
+		display: none;
+	}
+
 	.active {
 		display: block !important;
 		z-index: 1 !important;
 	}
-	.mobileFilterVisible {
+	.horizontalFilterBar {
 		display: block;
 	}
 
-	.filterDiv {
+	.verticalFilterBar {
 		display: none;
 	}
+
+	/* .filterDiv {
+		display: none;
+	} */
 
 	.jobsDiv {
 		width: 100% !important;
@@ -171,6 +206,10 @@ video {
 	}
 
 	.mobileVisible {
+		display: none;
+	}
+
+	.twoLineFilterBar {
 		display: none;
 	}
 }
@@ -197,6 +236,12 @@ video {
 	.imgLogo {
 		width: 350px !important;
 		height: 250px !important;
+	}
+	.horizontalFilterBar {
+		display: none;
+	}
+	.twoLineFilterBar {
+		display: block;
 	}
 }
 
@@ -269,6 +314,14 @@ video {
 	}
 	.main > p {
 		font-size: 20px;
+	}
+
+	.twoLineFilterBar {
+		display: none;
+	}
+
+	.oneLineFilterBar {
+		display: block;
 	}
 }
 
