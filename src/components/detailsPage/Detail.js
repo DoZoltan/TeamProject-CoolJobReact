@@ -11,7 +11,6 @@ const Detail = (props) => {
 	const { Header, Footer, Content } = Layout;
 	const [existInFavorite, setExistInFavorite] = useState(false);
 	const { user } = useContext(UserContext);
-
 	const history = useHistory();
 
 	useEffect(() => {
@@ -43,13 +42,22 @@ const Detail = (props) => {
 		message.error('Deleted from favorites');
 	};
 
+	const BackTo = () => {
+		let pathName = history.location.pathname;
+		if (pathName.includes('jobs')) {
+			history.push('/jobs');
+		} else {
+			history.push('/favorites');
+		}
+	};
+
 	return (
 		<Layout>
 			<Header id={'detailHeader'}>
 				{/* <Link to={history.go(-1)}> */}
 				{/* <Link to={onJob === true ? '/jobs' : '/favorite'}> */}
 				<Button
-					onClick={() => history.go(-1)}
+					onClick={BackTo}
 					id={'backToButton'}
 					style={{
 						color: 'white',
