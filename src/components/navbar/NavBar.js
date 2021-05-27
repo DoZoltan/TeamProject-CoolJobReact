@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu, Drawer } from 'antd';
 import { DisplayFilterBarContext } from '../../Contexts/DisplayFilterBarContext';
-
 import styled from 'styled-components';
 
 const StickyHeader = styled.header`
@@ -24,6 +23,7 @@ const NavBar = () => {
 	const onClose = () => {
 		setVisible(false);
 	};
+
 	return (
 		<Header key='header' className='header'>
 			<StickyHeader key='sticky-header'>
@@ -34,38 +34,38 @@ const NavBar = () => {
 								<i className='fas fa-bolt'></i>
 							</Link>
 						</Menu.Item>
-						<Menu.Item key='2'>
+						<Menu.Item key='3'>
 							<Link id={'linkToMain'} to='/main'>
 								Main
 							</Link>
 						</Menu.Item>
-						<Menu.Item key='3'>
+						<Menu.Item key='4'>
 							<Link id={'linkToJobs'} to='/jobs'>
 								Jobs
 							</Link>
 						</Menu.Item>
-						<Menu.Item key='4'>
+						<Menu.Item key='5'>
 							<Link id={'linkToFavorites'} to='/favorites'>
 								Favorites
 							</Link>
 						</Menu.Item>
-						<Menu.Item key='5'>
+						<Menu.Item key='6'>
 							<Link id={'linkToAdd'} to='/add'>
 								Add advertisement
 							</Link>
 						</Menu.Item>
-						<Menu.Item key='6' style={{ float: 'right' }}>
+						<Menu.Item key='7' style={{ float: 'right' }}>
 							<Link id={'linkToRegistration'} to='/registration'>
 								Registration
 							</Link>
 						</Menu.Item>
-						<Menu.Item key='7' style={{ float: 'right' }}>
+						<Menu.Item key='8' style={{ float: 'right' }}>
 							<Link id={'linkToLogin'} to='/login'>
 								Login
 							</Link>
 						</Menu.Item>
 						<Menu.Item
-							key='8'
+							key='9'
 							id={'reloadButton'}
 							style={{
 								color: 'white',
@@ -95,7 +95,7 @@ const NavBar = () => {
 							</Menu.Item>
 						)}
 						<Menu.Item
-							key='3'
+							key='10'
 							id={'menuButton'}
 							style={{ float: 'right' }}
 							onClick={showDrawer}
@@ -111,38 +111,38 @@ const NavBar = () => {
 						visible={visible}
 					>
 						<Menu theme='dark' mode='vertical'>
-							<Menu.Item key='1'>
+							<Menu.Item key='3'>
 								<Link id={'linkToMain'} to='/main'>
 									Main
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='2'>
+							<Menu.Item key='4'>
 								<Link id={'linkToJobs'} to='/jobs'>
 									Jobs
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='3'>
-								<Link id={'linkToFavorites'} to='/favorite'>
+							<Menu.Item key='5'>
+								<Link id={'linkToFavorites'} to='/favorites'>
 									Favorites
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='4'>
+							<Menu.Item key='6'>
 								<Link id={'linkToAdd'} to='/add'>
 									Add advertisement
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='5'>
+							<Menu.Item key='7'>
 								<Link id={'linkToRegistration'} to='/registration'>
 									Registration
 								</Link>
 							</Menu.Item>
-							<Menu.Item key='6'>
+							<Menu.Item key='8'>
 								<Link id={'linkToLogin'} to='/login'>
 									Login
 								</Link>
 							</Menu.Item>
 							<Menu.Item
-								key='7'
+								key='9'
 								id={'reloadButton'}
 								style={{
 									color: 'white',
@@ -182,7 +182,7 @@ const NavBar = () => {
 							</Link>
 						</Menu.Item>
 						<Menu.Item key='5'>
-							<Link id={'linkToFavorites'} to='/favorite'>
+							<Link id={'linkToFavorites'} to='/favorites'>
 								Favorites
 							</Link>
 						</Menu.Item>
