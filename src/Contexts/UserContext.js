@@ -6,7 +6,7 @@ export const UserContext = createContext();
 export const UserProvider = (props) => {
 	//const [axiosIsLoading, setAxiosIsLoading] = useState(true);
 	//const [axiosError, setAxiosError] = useState(null);
-	const [user, setUser] = useState(2); //will be null by default (after it will be an object)
+	const [user, token, setUser, setToken] = useState('c075aa2c-fa12-443d-a2f1-a2b3a67bd063'); //will be null by default (after it will be an object)
 
 	//const { data, isLoading, error } = useAxiosGet(url);
 
@@ -14,6 +14,8 @@ export const UserProvider = (props) => {
 		<UserContext.Provider
 			value={{
 				user,
+				token,
+				setToken,
 				setUser,
 			}}
 		>
