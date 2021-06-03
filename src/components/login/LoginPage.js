@@ -3,15 +3,18 @@ import { Input, Button, Checkbox, Form } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ForgotPassword from './ForgotPassword';
+import UseAxiosPostForLogin from '../../axios/useAxiosPostForLogin';
 
 const LoginPage = () => {
-	// let resultSample = {
-	// 	userName: '',
-	// 	password: '',
-	// };
+	let resultSample = {
+		'Email': '', //kumkvatmail@gmail.com
+		'Password': '', //Kumkvat-1
+	};
 
 	const onFinish = (values: any) => {
-		console.log('Received values of form: ', values);
+		resultSample.Email = values.email;
+		resultSample.Password = values.password;
+		console.log(UseAxiosPostForLogin(resultSample, 'https://localhost:44318/api/users/login'));
 	};
 
 	return (
@@ -19,7 +22,7 @@ const LoginPage = () => {
 			<div className='container-login'>
 				<div className='titleHolderLogin'>
 					<h2>Login</h2>
-					<p>Give your username and password for login!</p>
+					<p>Give your E-mail and password for login!</p>
 				</div>
 				<Form
 					name='normal_login'
@@ -30,17 +33,17 @@ const LoginPage = () => {
 					onFinish={onFinish}
 				>
 					<Form.Item
-						name='username'
+						name='email'
 						rules={[
 							{
 								required: true,
-								message: 'Please input your Username!',
+								message: 'Please input your E-mail!',
 							},
 						]}
 					>
 						<Input
 							prefix={<UserOutlined className='site-form-item-icon' />}
-							placeholder='Username'
+							placeholder='E-mail'
 						/>
 					</Form.Item>
 					<Form.Item
