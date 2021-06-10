@@ -21,7 +21,7 @@
 - React
 
 ## How to launch while it is not deployed
-1. Download the project
+1. Download the Project " use Demo branch"
 2. Open it with an IDE (for example with Microsoft VS Code)
 3. Open the terminal (View -> terminal)
 4. Write -> npm install -> press enter wait until done.
