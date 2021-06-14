@@ -5,7 +5,7 @@
 ## Project description
 #### This is a SPA "Single Page Application" with React for our job advertisement web application.
 #### It contains the frontend View.
-#### You can find the backtend part here: https://github.com/DoZoltan/TeamProject-CoolJobAPI/edit/development/README.md
+#### You can find the backtend part here: https://github.com/DoZoltan/TeamProject-CoolJobAPI/
 
 ## Features and aims of the whole project (frontend + backend)
 #### In this web application the users can:
