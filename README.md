@@ -1,6 +1,6 @@
 # Project name: CoolJob React
 
-## The project is still under development so maybe some of the features is not available.
+## The project is abandoned due to a new Angular frontend project.
 
 ## Project description
 #### This is a SPA "Single Page Application" with React for our job advertisement web application.
